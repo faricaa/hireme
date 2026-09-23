@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HireMe | Bantu Kariermu Tumbuh Lebih Cepat</title>
+<meta name="description" content="HireMe adalah portal persiapan karier: Review CV oleh HRD profesional, Practice Interview, dan info lowongan kerja full-time, part-time, dan magang yang terverifikasi.">
+
+<!-- Bootstrap 5 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap Icons (line-art vector icons) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --royal-blue:#0B4DA2;
+  --royal-blue-dark:#0A4293;
+  --electric-blue:#0066FF;
+  --sky-blue:#6BB1E4;
+  --white:#FFFFFF;
+  --accent-orange:#FF6B00;
+  --charcoal:#212529;
+  --slate:#6C757D;
+  --radius:12px;
+  --shadow: 0 10px 30px rgba(11,77,162,.10);
+  --shadow-sm: 0 4px 14px rgba(11,77,162,.08);
+}
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  font-family:'Plus Jakarta Sans', system-ui, sans-serif;
+  color:var(--charcoal);
+  background:var(--white);
+}
+h1,h2,h3,h4,h5{ font-weight:800; color:var(--charcoal); letter-spacing:-0.01em; }
+p{ color:var(--slate); line-height:1.7; }
+a{ text-decoration:none; }
+.muted{ color:var(--slate); }
+.text-royal{ color:var(--royal-blue) !important; }
+.bg-royal{ background:var(--royal-blue) !important; }
+.text-electric{ color:var(--electric-blue) !important; }
+.bg-sky{ background:var(--sky-blue) !important; }
+
+/* ---------- Buttons ---------- */
+.btn{ border-radius:10px; font-weight:600; padding:.65rem 1.5rem; transition:all .3s ease; border:none; }
+.btn-orange{ background:var(--accent-orange); color:#fff; }
+.btn-orange:hover{ background:#e05f00; color:#fff; transform:translateY(-2px); box-shadow:0 8px 20px rgba(255,107,0,.35); }
+.btn-outline-electric{ background:transparent; color:var(--electric-blue); border:2px solid var(--electric-blue); padding:.55rem 1.4rem; }
+.btn-outline-electric:hover{ background:var(--electric-blue); color:#fff; transform:translateY(-2px); }
+.btn-outline-white{ background:transparent; color:#fff; border:2px solid rgba(255,255,255,.7); padding:.55rem 1.4rem; }
+.btn-outline-white:hover{ background:#fff; color:var(--royal-blue); }
+
+/* ---------- Navbar ---------- */
+.navbar{
+  background:#fff; box-shadow:0 2px 20px rgba(11,77,162,.08);
+  padding:.85rem 0;
+}
+.navbar-brand{ font-weight:800; font-size:1.4rem; color:var(--royal-blue) !important; }
+.navbar-brand span{ color:var(--accent-orange); }
+.nav-link{ font-weight:600; color:var(--charcoal) !important; margin:0 .4rem; padding:.4rem .2rem !important; position:relative; }
+.nav-link.active{ color:var(--electric-blue) !important; }
+.nav-link.active::after{
+  content:""; position:absolute; left:0; bottom:-2px; width:100%; height:3px;
+  background:var(--electric-blue); border-radius:3px;
+}
+
+/* ---------- Hero ---------- */
+.hero{
+  background:linear-gradient(120deg, var(--royal-blue) 55%, var(--royal-blue-dark) 100%);
+  position:relative; overflow:hidden; padding:5.5rem 0 6rem;
+}
+.hero::after{
+  content:""; position:absolute; right:-120px; bottom:-140px; width:420px; height:420px;
+  background:radial-gradient(circle, var(--sky-blue) 0%, transparent 70%); opacity:.35; border-radius:50%;
+}
+.hero h1{ color:#fff; font-size:clamp(2rem, 4vw, 3rem); line-height:1.15; }
+.hero .lead{ color:#DCEBFB; font-size:1.15rem; max-width:520px; }
+.hero-badge{
+  display:inline-flex; align-items:center; gap:.5rem; background:rgba(255,255,255,.12);
+  color:#fff; padding:.4rem .9rem; border-radius:30px; font-size:.85rem; font-weight:600; margin-bottom:1.25rem;
+}
+.hero-figure img{ border-radius:16px; box-shadow:0 20px 50px rgba(0,0,0,.25); }
+
+/* ---------- Sections ---------- */
+.section{ padding:5rem 0; }
+.section-title{ font-size:clamp(1.6rem,3vw,2.2rem); }
+.eyebrow{ color:var(--electric-blue); font-weight:700; font-size:.95rem; margin-bottom:.4rem; }
+
+/* ---------- Pillars ---------- */
+.pillar-card{
+  border-radius:var(--radius); padding:1.75rem 1.25rem; text-align:center; height:100%;
+  border:1px solid #EAF1FB; transition:all .3s ease;
+}
+.pillar-card:hover{ transform:translateY(-6px); box-shadow:var(--shadow-sm); border-color:transparent; }
+.pillar-icon{
+  width:56px; height:56px; border-radius:14px; display:flex; align-items:center; justify-content:center;
+  background:rgba(0,102,255,.1); color:var(--electric-blue); font-size:1.5rem; margin:0 auto 1rem;
+}
+
+/* ---------- Service cards w/ HRD carousel ---------- */
+.service-card{
+  border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); height:100%;
+  border:1px solid #EEF3FB; background:#fff;
+}
+.hrd-photo-wrap{ position:relative; height:230px; overflow:hidden; background:var(--sky-blue); }
+.hrd-photo{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  opacity:0; transition:opacity 1s ease-in-out;
+}
+.hrd-photo.active{ opacity:1; }
+.hrd-caption{
+  position:absolute; left:0; right:0; bottom:0; padding:.9rem 1rem;
+  background:linear-gradient(0deg, rgba(11,77,162,.85), transparent);
+  color:#fff; font-size:.85rem;
+}
+.service-body{ padding:1.5rem; }
+.service-body .price-tag{ color:var(--accent-orange); font-weight:700; }
+
+/* ---------- Testimonials ---------- */
+.testi-track-wrap{ overflow:hidden; padding:1rem 0 2rem; }
+.testi-track{ display:flex; gap:1.25rem; transition:transform .5s ease; }
+.testi-card{
+  flex:0 0 300px; background:#F4F9FF; border-radius:16px 16px 16px 4px; padding:1.4rem;
+  box-shadow:var(--shadow-sm); opacity:.55; transform:scale(.92); transition:all .4s ease;
+}
+.testi-card.is-active{ opacity:1; transform:scale(1); background:#fff; border:2px solid var(--sky-blue); }
+.testi-card .stars{ color:var(--accent-orange); font-size:.85rem; margin-bottom:.5rem; }
+.testi-avatar{ width:42px; height:42px; border-radius:50%; object-fit:cover; }
+.testi-controls{ display:flex; justify-content:center; gap:.75rem; margin-top:.5rem; }
+.testi-controls button{
+  width:38px; height:38px; border-radius:50%; border:1px solid #DCE7F7; background:#fff;
+  color:var(--royal-blue); display:flex; align-items:center; justify-content:center;
+}
+.testi-controls button:hover{ background:var(--electric-blue); color:#fff; border-color:var(--electric-blue); }
+
+/* ---------- Jobs page ---------- */
+.filter-tabs{ display:flex; flex-wrap:wrap; gap:.6rem; }
+.filter-tab{
+  border:2px solid #E3ECF9; background:#fff; color:var(--slate); padding:.5rem 1.25rem;
+  border-radius:30px; font-weight:600; font-size:.9rem; transition:all .25s ease;
+}
+.filter-tab.active{ background:var(--electric-blue); border-color:var(--electric-blue); color:#fff; }
+.filter-tab:hover:not(.active){ border-color:var(--electric-blue); color:var(--electric-blue); }
+.search-wrap{ position:relative; }
+.search-wrap i{ position:absolute; left:1rem; top:50%; transform:translateY(-50%); color:var(--slate); }
+.search-wrap input{ padding-left:2.75rem; border-radius:30px; border:2px solid #E3ECF9; padding-top:.65rem; padding-bottom:.65rem; }
+.search-wrap input:focus{ border-color:var(--electric-blue); box-shadow:none; }
+
+.job-card{
+  border:1px solid #EEF3FB; border-radius:var(--radius); padding:1.4rem; height:100%;
+  transition:all .3s ease; background:#fff;
+}
+.job-card:hover{ box-shadow:var(--shadow-sm); transform:translateY(-4px); border-color:transparent; }
+.job-logo{
+  width:50px; height:50px; border-radius:10px; background:rgba(11,77,162,.08); color:var(--royal-blue);
+  display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1.1rem;
+}
+.badge-type{ font-weight:600; font-size:.72rem; padding:.35rem .7rem; border-radius:20px; }
+.badge-fulltime{ background:rgba(0,102,255,.12); color:var(--electric-blue); }
+.badge-parttime{ background:rgba(255,107,0,.12); color:var(--accent-orange); }
+.badge-magang{ background:rgba(107,177,228,.25); color:var(--royal-blue); }
+.job-empty{ display:none; text-align:center; padding:3rem 1rem; color:var(--slate); }
+
+/* ---------- About ---------- */
+.value-card{ border-radius:var(--radius); padding:1.5rem; border:1px solid #EAF1FB; height:100%; }
+.value-icon{ width:48px;height:48px;border-radius:12px;background:rgba(255,107,0,.1);color:var(--accent-orange); display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:.75rem; }
+.team-photo{ width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:var(--radius); }
+
+/* ---------- News ---------- */
+.news-featured{
+  background:var(--royal-blue); border-radius:16px; overflow:hidden; color:#fff;
+}
+.news-featured img{ width:100%; height:100%; object-fit:cover; min-height:260px; }
+.zigzag-item{ padding:2.25rem 0; border-bottom:1px solid #EEF3FB; }
+.zigzag-item img{ width:100%; border-radius:var(--radius); object-fit:cover; aspect-ratio:4/3; }
+.news-tag{ color:var(--electric-blue); font-weight:700; font-size:.8rem; text-transform:uppercase; letter-spacing:.04em; }
+
+/* ---------- Contact ---------- */
+.contact-split{ border-radius:20px; overflow:hidden; box-shadow:var(--shadow); }
+.contact-info-col{ background:var(--royal-blue); color:#fff; padding:3rem 2.25rem; }
+.contact-info-col .info-row{ display:flex; gap:.9rem; align-items:flex-start; margin-bottom:1.5rem; }
+.contact-info-col .info-row i{ font-size:1.3rem; color:var(--sky-blue); margin-top:.15rem; }
+.social-circle{
+  width:38px; height:38px; border-radius:50%; background:rgba(255,255,255,.12); color:#fff;
+  display:flex; align-items:center; justify-content:center; transition:all .25s ease;
+}
+.social-circle:hover{ background:var(--accent-orange); }
+.contact-form-col{ background:#fff; padding:3rem 2.25rem; }
+.form-control, .form-select{ border-radius:10px; border:2px solid #E3ECF9; padding:.65rem .9rem; }
+.form-control:focus, .form-select:focus{ border-color:var(--electric-blue); box-shadow:none; }
+.form-label{ font-weight:600; font-size:.9rem; color:var(--charcoal); }
+
+/* ---------- Footer ---------- */
+footer{ background:var(--charcoal); color:#B9C0C8; padding:3rem 0 1.5rem; }
+footer a{ color:#B9C0C8; }
+footer a:hover{ color:#fff; }
+footer h6{ color:#fff; font-weight:700; }
+
+/* ---------- Modal ---------- */
+.modal-content{ border-radius:16px; border:none; }
+.modal-header{ border-bottom:1px solid #EEF3FB; }
+.package-badge{ font-size:.8rem; background:rgba(255,107,0,.1); color:var(--accent-orange); padding:.3rem .7rem; border-radius:8px; display:inline-block; margin-top:.3rem; }
+
+/* Page switching */
+.page-section{ display:none; }
+.page-section.active-page{ display:block; }
+
+/* fade-in for HRD photos already handled via opacity transition */
+
+@media (max-width:767px){
+  .contact-info-col, .contact-form-col{ padding:2rem 1.25rem; }
+  .hero{ text-align:center; padding:3.5rem 0 4rem;}
+  .hero .lead{ margin-left:auto; margin-right:auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAVBAR ============ -->
+<nav class="navbar navbar-expand-lg sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="#" data-page="home">
+      <img src="gambar/logo1.png" alt="HireMe Logo" height="80">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMain">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+        <li class="nav-item"><a class="nav-link active" href="#" data-page="home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" data-page="jobs">Info Lowongan</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" data-page="about">About Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" data-page="news">News</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" data-page="contact">Contact Us</a></li>
+        <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+          <button class="btn btn-orange w-100" data-bs-toggle="modal" data-bs-target="#bookingModal">Book Now</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HOME PAGE ============ -->
+<main id="page-home" class="page-section active-page">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+          <span class="hero-badge"><i class="bi bi-patch-check-fill"></i> Dipercaya 1.200+ pencari kerja</span>
+          <h1>Bantu Kariermu Tumbuh Lebih Cepat</h1>
+          <p class="lead mt-3 mb-4">Review CV oleh HRD profesional, latihan interview yang realistis, dan akses lowongan kerja terverifikasi — semua dalam satu tempat.</p>
+          <div class="d-flex flex-wrap gap-3">
+            <button class="btn btn-orange" id="getStartedBtn">Get Started</button>
+            <button class="btn btn-outline-white" data-bs-toggle="modal" data-bs-target="#bookingModal">Book Now</button>
+          </div>
+        </div>
+        <div class="col-lg-6 hero-figure text-center">
+          <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=700&q=80&auto=format&fit=crop" alt="Fresh graduate mempersiapkan wawancara kerja dengan mentor HireMe" class="img-fluid">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 Pillars -->
+  <section class="section pt-5">
+    <div class="container">
+      <div class="text-center mb-5">
+        <div class="eyebrow">Kenapa HireMe</div>
+        <h2 class="section-title">5 Pilar Layanan Kami</h2>
+      </div>
+      <div class="row g-3">
+        <div class="col-6 col-lg">
+          <div class="pillar-card">
+            <div class="pillar-icon"><i class="bi bi-file-earmark-text"></i></div>
+            <h6 class="mb-1">Review CV</h6>
+            <p class="small mb-0">Masukan langsung dari HRD profesional</p>
+          </div>
+        </div>
+        <div class="col-6 col-lg">
+          <div class="pillar-card">
+            <div class="pillar-icon"><i class="bi bi-camera-video"></i></div>
+            <h6 class="mb-1">Practice Interview</h6>
+            <p class="small mb-0">Simulasi wawancara senyata mungkin</p>
+          </div>
+        </div>
+        <div class="col-6 col-lg">
+          <div class="pillar-card">
+            <div class="pillar-icon"><i class="bi bi-briefcase"></i></div>
+            <h6 class="mb-1">Info Lowongan</h6>
+            <p class="small mb-0">Full-time, part-time, & magang terverifikasi</p>
+          </div>
+        </div>
+        <div class="col-6 col-lg">
+          <div class="pillar-card">
+            <div class="pillar-icon"><i class="bi bi-compass"></i></div>
+            <h6 class="mb-1">Bimbingan Karier</h6>
+            <p class="small mb-0">Arah karier yang sesuai minatmu</p>
+          </div>
+        </div>
+        <div class="col-6 col-lg">
+          <div class="pillar-card">
+            <div class="pillar-icon"><i class="bi bi-people"></i></div>
+            <h6 class="mb-1">Komunitas</h6>
+            <p class="small mb-0">Terhubung dengan pencari kerja lain</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Service Cards -->
+  <section class="section pt-0" id="featureCards">
+    <div class="container">
+      <div class="text-center mb-5">
+        <div class="eyebrow">Layanan Utama</div>
+        <h2 class="section-title">Dibimbing Langsung oleh HRD Profesional</h2>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="service-card">
+            <div class="hrd-photo-wrap" data-carousel="cv">
+              <img class="hrd-photo active" src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&q=80&auto=format&fit=crop" alt="Mentor HRD review CV - Dina Maharani">
+              <img class="hrd-photo" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=600&q=80&auto=format&fit=crop" alt="Mentor HRD review CV - Bagus Prasetyo">
+              <img class="hrd-photo" src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=600&q=80&auto=format&fit=crop" alt="Mentor HRD review CV - Sari Wulandari">
+              <div class="hrd-caption">Mentor HRD bersertifikat, rata-rata 8+ tahun pengalaman rekrutmen</div>
+            </div>
+            <div class="service-body">
+              <h5>Review CV</h5>
+              <p class="small">CV kamu akan dinilai langsung oleh HRD profesional: format, kata kunci ATS, hingga cara menonjolkan pencapaian.</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="price-tag">Mulai Rp75.000</span>
+                <button class="btn btn-outline-electric btn-sm" data-service="Review CV">Book Now</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="service-card">
+            <div class="hrd-photo-wrap" data-carousel="interview">
+              <img class="hrd-photo active" src="https://images.unsplash.com/photo-1573164713988-8665fc963095?w=600&q=80&auto=format&fit=crop" alt="Mentor HRD practice interview - Rangga Wibisono">
+              <img class="hrd-photo" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&q=80&auto=format&fit=crop" alt="Mentor HRD practice interview - Amelia Putri">
+              <img class="hrd-photo" src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&q=80&auto=format&fit=crop" alt="Mentor HRD practice interview - Fajar Nugroho">
+              <div class="hrd-caption">Simulasi 1-on-1 lewat video call, lengkap dengan evaluasi tertulis</div>
+            </div>
+            <div class="service-body">
+              <h5>Practice Interview</h5>
+              <p class="small">Latihan wawancara kerja dengan pertanyaan nyata dari industri, plus umpan balik yang bisa langsung dipraktikkan.</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="price-tag">Mulai Rp100.000</span>
+                <button class="btn btn-outline-electric btn-sm" data-service="Practice Interview">Book Now</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="section" style="background:#F8FBFF;">
+    <div class="container">
+      <div class="text-center mb-4">
+        <div class="eyebrow">Testimoni</div>
+        <h2 class="section-title">Kata Mereka yang Sudah Coba</h2>
+      </div>
+      <div class="testi-track-wrap">
+        <div class="testi-track" id="testiTrack">
+          <!-- testimonial cards injected by JS -->
+        </div>
+      </div>
+      <div class="testi-controls">
+        <button id="testiPrev" aria-label="Sebelumnya"><i class="bi bi-chevron-left"></i></button>
+        <button id="testiNext" aria-label="Berikutnya"><i class="bi bi-chevron-right"></i></button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ JOBS PAGE ============ -->
+<main id="page-jobs" class="page-section">
+  <section class="section" style="padding-top:3rem;">
+    <div class="container">
+      <div class="mb-4">
+        <div class="eyebrow">Info Lowongan</div>
+        <h2 class="section-title">Temukan Peluang yang Cocok Untukmu</h2>
+        <p>Semua lowongan telah diverifikasi tim HireMe sebelum ditampilkan.</p>
+      </div>
+
+      <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-4">
+        <div class="filter-tabs">
+          <button class="filter-tab active" data-filter="all">Semua Loker</button>
+          <button class="filter-tab" data-filter="fulltime">Full-Time</button>
+          <button class="filter-tab" data-filter="parttime">Part-Time</button>
+          <button class="filter-tab" data-filter="magang">Magang</button>
+        </div>
+        <div class="search-wrap" style="max-width:340px; width:100%;">
+          <i class="bi bi-search"></i>
+          <input type="text" class="form-control" id="jobSearch" placeholder="Cari posisi, perusahaan, atau kata kunci...">
+        </div>
+      </div>
+
+      <div class="row g-4" id="jobGrid"></div>
+      <div class="job-empty" id="jobEmpty">
+        <i class="bi bi-search fs-1 d-block mb-2"></i>
+        Tidak ada lowongan yang cocok. Coba kata kunci lain.
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ ABOUT PAGE ============ -->
+<main id="page-about" class="page-section">
+  <section class="section" style="padding-top:3rem;">
+    <div class="container">
+      <div class="row align-items-center g-5 mb-5">
+        <div class="col-lg-6">
+          <div class="eyebrow">Our Story</div>
+          <h2 class="section-title mb-3">Berawal dari Sulitnya Mencari Kerja Pertama</h2>
+          <p>HireMe lahir dari pengalaman para pendirinya yang kesulitan menembus proses rekrutmen sebagai fresh graduate. Kami membangun HireMe agar setiap pencari kerja punya akses yang sama terhadap bimbingan HRD profesional — tanpa harus kenal orang dalam.</p>
+          <p>Sejak berdiri, HireMe telah membantu ribuan pencari kerja memperbaiki CV, lebih percaya diri saat wawancara, dan menemukan lowongan yang sesuai dengan minat mereka.</p>
+        </div>
+        <div class="col-lg-6">
+          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=700&q=80&auto=format&fit=crop" class="img-fluid rounded-4 shadow" alt="Tim HireMe berdiskusi menyusun program bimbingan karier">
+        </div>
+      </div>
+
+      <div class="text-center mb-4">
+        <div class="eyebrow">Core Values</div>
+        <h2 class="section-title">Nilai yang Kami Pegang</h2>
+      </div>
+      <div class="row g-3 mb-5">
+        <div class="col-md-3 col-6">
+          <div class="value-card">
+            <div class="value-icon"><i class="bi bi-shield-check"></i></div>
+            <h6>Terpercaya</h6>
+            <p class="small mb-0">Setiap lowongan & mentor diverifikasi.</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-6">
+          <div class="value-card">
+            <div class="value-icon"><i class="bi bi-lightbulb"></i></div>
+            <h6>Suportif</h6>
+            <p class="small mb-0">Umpan balik yang membangun, bukan menjatuhkan.</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-6">
+          <div class="value-card">
+            <div class="value-icon"><i class="bi bi-graph-up-arrow"></i></div>
+            <h6>Berorientasi Hasil</h6>
+            <p class="small mb-0">Fokus pada progres karier yang nyata.</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-6">
+          <div class="value-card">
+            <div class="value-icon"><i class="bi bi-heart"></i></div>
+            <h6>Inklusif</h6>
+            <p class="small mb-0">Terbuka untuk semua latar belakang.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mb-4">
+        <div class="eyebrow">Tim Kami</div>
+        <h2 class="section-title">HRD Profesional di Balik HireMe</h2>
+      </div>
+      <div class="row g-4" id="teamGrid"></div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ NEWS PAGE ============ -->
+<main id="page-news" class="page-section">
+  <section class="section" style="padding-top:3rem;">
+    <div class="container">
+      <div class="mb-4">
+        <div class="eyebrow">News</div>
+        <h1 class="section-title">Tips & Insight Seputar Karier</h1>
+      </div>
+
+      <!-- Featured article -->
+      <div class="news-featured row g-0 mb-5">
+        <div class="col-md-6">
+          <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80&auto=format&fit=crop" alt="Tim merekrut membahas strategi ATS untuk fresh graduate">
+        </div>
+        <div class="col-md-6 p-4 p-lg-5 d-flex flex-column justify-content-center">
+          <span class="news-tag" style="color:var(--sky-blue);">CV & ATS</span>
+          <h2 class="mt-2" style="color:#fff;">5 Kesalahan CV yang Bikin Fresh Graduate Ditolak Sistem ATS</h2>
+          <p style="color:#DCEBFB;">Banyak CV bagus gagal lolos bukan karena isinya, tapi karena formatnya tidak terbaca sistem. Berikut kesalahan paling umum dan cara memperbaikinya.</p>
+          <a href="#" class="btn btn-outline-white align-self-start mt-2">Baca Selengkapnya</a>
+        </div>
+      </div>
+
+      <div id="newsList"></div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ CONTACT PAGE ============ -->
+<main id="page-contact" class="page-section">
+  <section class="section" style="padding-top:3rem;">
+    <div class="container">
+      <div class="text-center mb-5">
+        <div class="eyebrow">Contact Us</div>
+        <h2 class="section-title">Ada Pertanyaan? Hubungi Kami</h2>
+      </div>
+      <div class="contact-split row g-0">
+        <div class="col-lg-5 contact-info-col">
+          <h4 class="text-white mb-4">Informasi Kontak</h4>
+          <div class="info-row">
+            <i class="bi bi-geo-alt"></i>
+            <div>Jl. Slamet Riyadi No. 45, Surakarta, Jawa Tengah, Indonesia</div>
+          </div>
+          <div class="info-row">
+            <i class="bi bi-telephone"></i>
+            <div>+62 821-3999-7707</div>
+          </div>
+          <div class="info-row">
+            <i class="bi bi-envelope"></i>
+            <div>halo@hireme.id</div>
+          </div>
+          <div class="info-row">
+            <i class="bi bi-clock"></i>
+            <div>Senin–Jumat, 09.00–18.00 WIB</div>
+          </div>
+          <div class="d-flex gap-2 mt-4">
+            <a href="#" class="social-circle"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="social-circle"><i class="bi bi-linkedin"></i></a>
+            <a href="#" class="social-circle"><i class="bi bi-whatsapp"></i></a>
+            <a href="#" class="social-circle"><i class="bi bi-tiktok"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-7 contact-form-col">
+          <h4 class="mb-4">Kirim Pesan</h4>
+          <form id="contactForm" novalidate>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Nama Lengkap</label>
+                <input type="text" class="form-control" name="name" required>
+                <div class="invalid-feedback">Nama wajib diisi.</div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" name="email" required>
+                <div class="invalid-feedback">Masukkan email yang valid.</div>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Subjek</label>
+                <input type="text" class="form-control" name="subject" required>
+                <div class="invalid-feedback">Subjek wajib diisi.</div>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Pesan</label>
+                <textarea class="form-control" name="message" rows="4" required></textarea>
+                <div class="invalid-feedback">Tulis pesanmu di sini.</div>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-orange w-100">Kirim Pesan</button>
+              </div>
+              <div class="col-12">
+                <div id="contactSuccess" class="alert alert-success d-none mt-2 mb-0">Pesan terkirim! Tim kami akan segera membalas.</div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <h5 class="text-white">Hire<span style="color:var(--accent-orange);">Me</span></h5>
+        <p class="small">Bantu Kariermu Tumbuh Lebih Cepat. Portal persiapan karier dan info lowongan kerja terverifikasi.</p>
+      </div>
+      <div class="col-6 col-lg-2">
+        <h6>Navigasi</h6>
+        <ul class="list-unstyled small">
+          <li class="mb-2"><a href="#" data-page="home">Home</a></li>
+          <li class="mb-2"><a href="#" data-page="jobs">Info Lowongan</a></li>
+          <li class="mb-2"><a href="#" data-page="about">About Us</a></li>
+          <li class="mb-2"><a href="#" data-page="news">News</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-lg-2">
+        <h6>Layanan</h6>
+        <ul class="list-unstyled small">
+          <li class="mb-2"><a href="#" data-bs-toggle="modal" data-bs-target="#bookingModal">Review CV</a></li>
+          <li class="mb-2"><a href="#" data-bs-toggle="modal" data-bs-target="#bookingModal">Practice Interview</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4">
+        <h6>Kontak</h6>
+        <p class="small mb-1"><i class="bi bi-telephone me-2"></i>+62 812-3456-7890</p>
+        <p class="small mb-0"><i class="bi bi-envelope me-2"></i>halo@hireme.id</p>
+      </div>
+    </div>
+    <hr class="my-4" style="border-color:#3a3f45;">
+    <p class="small text-center mb-0">&copy; 2026 HireMe. Seluruh hak cipta dilindungi.</p>
+  </div>
+</footer>
+
+<!-- ============ BOOKING MODAL ============ -->
+<div class="modal fade" id="bookingModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Booking Layanan</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="bookingForm" novalidate>
+          <div class="mb-3">
+            <label class="form-label">Nama Lengkap</label>
+            <input type="text" class="form-control" name="name" required>
+            <div class="invalid-feedback">Nama wajib diisi.</div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Nomor WhatsApp</label>
+            <input type="tel" class="form-control" name="phone" placeholder="08xxxxxxxxxx" pattern="[0-9]{9,14}" required>
+            <div class="invalid-feedback">Masukkan nomor WhatsApp yang valid (angka saja).</div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Pilih Layanan</label>
+            <select class="form-select" name="service" id="bookingService" required>
+              <option value="" selected disabled>-- Pilih layanan --</option>
+              <option value="Review CV">Review CV</option>
+              <option value="Practice Interview">Practice Interview</option>
+            </select>
+            <div class="invalid-feedback">Pilih salah satu layanan.</div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Paket</label>
+            <select class="form-select" name="package" id="bookingPackage" required>
+              <option value="" selected disabled>-- Pilih layanan dahulu --</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Tanggal</label>
+            <input type="date" class="form-control" name="date" required>
+            <div class="invalid-feedback">Pilih tanggal sesi.</div>
+          </div>
+          <div class="mb-1">
+            <label class="form-label">Catatan (opsional)</label>
+            <textarea class="form-control" name="notes" rows="2"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-orange w-100" id="bookingSubmit">
+          <i class="bi bi-whatsapp me-1"></i> Kirim via WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ JOB DETAIL MODAL ============ -->
+<div class="modal fade" id="jobDetailModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="jobDetailTitle">Detail Lowongan</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="jobDetailBody"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-orange w-100" id="jobDetailApply">
+          <i class="bi bi-whatsapp me-1"></i> Apply Now
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+(function(){
+  "use strict";
+
+  var ADMIN_WA_NUMBER = "6282139997607"; // ganti dengan nomor WhatsApp admin
+
+  /* ================= PAGE NAVIGATION ================= */
+  var pages = document.querySelectorAll(".page-section");
+  var navLinks = document.querySelectorAll("[data-page]");
+
+  function goToPage(pageKey){
+    pages.forEach(function(p){ p.classList.toggle("active-page", p.id === "page-" + pageKey); });
+    document.querySelectorAll(".nav-link[data-page]").forEach(function(l){
+      l.classList.toggle("active", l.getAttribute("data-page") === pageKey);
+    });
+    window.scrollTo({top:0, behavior:"instant" in window ? "instant" : "auto"});
+    var collapse = document.getElementById("navMain");
+    if(collapse.classList.contains("show")){
+      bootstrap.Collapse.getOrCreateInstance(collapse).hide();
+    }
+  }
+
+  navLinks.forEach(function(link){
+    link.addEventListener("click", function(e){
+      e.preventDefault();
+      goToPage(link.getAttribute("data-page"));
+    });
+  });
+
+  document.getElementById("getStartedBtn").addEventListener("click", function(){
+    document.getElementById("featureCards").scrollIntoView({behavior:"smooth"});
+  });
+
+  /* ================= HRD PHOTO FADE CAROUSEL ================= */
+  document.querySelectorAll("[data-carousel]").forEach(function(wrap){
+    var imgs = wrap.querySelectorAll(".hrd-photo");
+    var idx = 0;
+    if(imgs.length < 2) return;
+    setInterval(function(){
+      imgs[idx].classList.remove("active");
+      idx = (idx + 1) % imgs.length;
+      imgs[idx].classList.add("active");
+    }, 3500);
+  });
+
+  /* ================= TESTIMONIALS ================= */
+  var testimonials = [
+    {name:"Rizky A.", role:"Fresh Graduate - Teknik Industri", text:"Setelah review CV di HireMe, callback interview saya naik drastis. Formatnya jadi jauh lebih rapi!"},
+    {name:"Salsabila N.", role:"Career Switcher", text:"Practice interview-nya kerasa banget kayak wawancara asli. Jadi lebih pede pas interview beneran."},
+    {name:"Dimas P.", role:"Pencari Kerja Part-Time", text:"Info lowongan part-time-nya update terus dan jelas terverifikasi, nggak perlu takut penipuan."},
+    {name:"Intan K.", role:"Mahasiswa Magang", text:"Dapat magang lewat HireMe dalam 2 minggu. Prosesnya gampang banget diikuti."},
+    {name:"Bayu S.", role:"Fresh Graduate - Akuntansi", text:"HRD-nya kasih masukan yang jujur dan jelas, bukan cuma basa-basi. Sangat membantu."}
+  ];
+
+  var track = document.getElementById("testiTrack");
+  var activeTesti = 1;
+
+  function renderTestimonials(){
+    track.innerHTML = "";
+    testimonials.forEach(function(t, i){
+      var card = document.createElement("div");
+      card.className = "testi-card" + (i === activeTesti ? " is-active" : "");
+      card.innerHTML =
+        '<div class="d-flex align-items-center gap-2 mb-2">' +
+          '<div class="testi-avatar d-flex align-items-center justify-content-center" style="background:var(--sky-blue); color:#fff; font-weight:700;">' + t.name.charAt(0) + '</div>' +
+          '<div><div class="fw-bold small">' + t.name + '</div><div class="small muted">' + t.role + '</div></div>' +
+        '</div>' +
+        '<div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>' +
+        '<p class="small mb-0">' + t.text + '</p>';
+      track.appendChild(card);
+    });
+    centerTestimonial();
+  }
+
+  function centerTestimonial(){
+    var cardWidth = 300 + 20; // card width + gap approx
+    var wrapWidth = track.parentElement.offsetWidth;
+    var offset = (activeTesti * cardWidth) - (wrapWidth / 2) + (cardWidth / 2);
+    track.style.transform = "translateX(" + (-offset) + "px)";
+  }
+
+  document.getElementById("testiPrev").addEventListener("click", function(){
+    activeTesti = (activeTesti - 1 + testimonials.length) % testimonials.length;
+    renderTestimonials();
+  });
+  document.getElementById("testiNext").addEventListener("click", function(){
+    activeTesti = (activeTesti + 1) % testimonials.length;
+    renderTestimonials();
+  });
+  window.addEventListener("resize", centerTestimonial);
+  renderTestimonials();
+
+  /* ================= JOB LISTINGS ================= */
+  var jobs = [
+    {title:"Social Media Specialist", company:"Nusantara Digital", location:"Surakarta", type:"fulltime", posted:"2 hari lalu", desc:"Mengelola konten dan strategi media sosial perusahaan.", qualifications:["Min. D3/S1 semua jurusan","Menguasai Canva/Adobe","Paham tren media sosial","Kreatif dan komunikatif"]},
+    {title:"Admin Gudang", company:"Sentosa Logistik", location:"Semarang", type:"parttime", posted:"1 hari lalu", desc:"Mengelola pencatatan stok barang masuk dan keluar.", qualifications:["Min. SMA/SMK sederajat","Teliti dan disiplin","Bisa Ms. Excel dasar","Siap kerja shift"]},
+    {title:"Marketing Intern", company:"Kopi Ranting", location:"Yogyakarta", type:"magang", posted:"3 hari lalu", desc:"Membantu tim marketing menyusun campaign promosi.", qualifications:["Mahasiswa aktif semester akhir","Aktif di media sosial","Mau belajar hal baru","Bisa magang min. 3 bulan"]},
+    {title:"Staff Finance", company:"Mitra Sejahtera Group", location:"Surakarta", type:"fulltime", posted:"5 hari lalu", desc:"Menangani pencatatan transaksi dan laporan keuangan bulanan.", qualifications:["S1 Akuntansi/Keuangan","Paham dasar perpajakan","Teliti dan jujur","Bisa menggunakan software akuntansi"]},
+    {title:"Content Writer (Part-Time)", company:"Warta Karier", location:"Remote", type:"parttime", posted:"6 jam lalu", desc:"Menulis artikel seputar tips karier dan dunia kerja.", qualifications:["Portofolio tulisan","Mampu riset mandiri","Deadline-oriented","Bisa kerja remote"]},
+    {title:"HR Intern", company:"Bangun Karya Nusantara", location:"Surakarta", type:"magang", posted:"1 minggu lalu", desc:"Membantu proses rekrutmen dan administrasi HR.", qualifications:["Mahasiswa Psikologi/Manajemen","Komunikatif","Rapi dalam administrasi","Magang min. 4 bulan"]},
+    {title:"Graphic Designer", company:"Visualka Studio", location:"Solo Baru", type:"fulltime", posted:"4 hari lalu", desc:"Membuat materi visual untuk kebutuhan klien dan internal.", qualifications:["Min. D3 DKV/Desain","Mahir Figma & Adobe Suite","Punya portofolio","Bisa kerja dengan deadline ketat"]},
+    {title:"Customer Service (Part-Time)", company:"Toko Ceria Online", location:"Surakarta", type:"parttime", posted:"2 hari lalu", desc:"Melayani pertanyaan dan pesanan pelanggan via chat.", qualifications:["Min. SMA sederajat","Ramah dan sabar","Bisa kerja sore-malam","Terbiasa aplikasi chat"]}
+  ];
+
+  var jobGrid = document.getElementById("jobGrid");
+  var jobEmpty = document.getElementById("jobEmpty");
+  var currentFilter = "all";
+  var currentSearch = "";
+
+  var typeBadge = {fulltime:{label:"Full-Time", cls:"badge-fulltime"}, parttime:{label:"Part-Time", cls:"badge-parttime"}, magang:{label:"Magang", cls:"badge-magang"}};
+
+  function renderJobs(){
+    var filtered = jobs.filter(function(j){
+      var matchType = currentFilter === "all" || j.type === currentFilter;
+      var q = currentSearch.toLowerCase();
+      var matchSearch = !q || j.title.toLowerCase().indexOf(q) > -1 || j.company.toLowerCase().indexOf(q) > -1 || j.location.toLowerCase().indexOf(q) > -1;
+      return matchType && matchSearch;
+    });
+
+    jobGrid.innerHTML = "";
+    jobEmpty.style.display = filtered.length ? "none" : "block";
+
+    filtered.forEach(function(j, i){
+      var badge = typeBadge[j.type];
+      var col = document.createElement("div");
+      col.className = "col-md-6 col-lg-4";
+      col.innerHTML =
+        '<div class="job-card">' +
+          '<div class="d-flex justify-content-between align-items-start mb-3">' +
+            '<div class="job-logo">' + j.company.charAt(0) + '</div>' +
+            '<span class="badge-type ' + badge.cls + '">' + badge.label + '</span>' +
+          '</div>' +
+          '<h6 class="mb-1">' + j.title + '</h6>' +
+          '<p class="small mb-1">' + j.company + ' &middot; ' + j.location + '</p>' +
+          '<p class="small muted mb-3">Diposting ' + j.posted + '</p>' +
+          '<div class="d-flex gap-2">' +
+            '<button class="btn btn-outline-electric btn-sm flex-fill" data-view-job="' + i + '">View Detail</button>' +
+            '<button class="btn btn-orange btn-sm flex-fill" data-apply-job="' + i + '">Apply Now</button>' +
+          '</div>' +
+        '</div>';
+      jobGrid.appendChild(col);
+    });
+
+    // attach listeners for this filtered set
+    jobGrid.querySelectorAll("[data-view-job]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        openJobDetail(filtered[parseInt(btn.getAttribute("data-view-job"),10)]);
+      });
+    });
+    jobGrid.querySelectorAll("[data-apply-job]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        applyToJob(filtered[parseInt(btn.getAttribute("data-apply-job"),10)]);
+      });
+    });
+  }
+
+  document.querySelectorAll(".filter-tab").forEach(function(tab){
+    tab.addEventListener("click", function(){
+      document.querySelectorAll(".filter-tab").forEach(function(t){ t.classList.remove("active"); });
+      tab.classList.add("active");
+      currentFilter = tab.getAttribute("data-filter");
+      renderJobs();
+    });
+  });
+
+  document.getElementById("jobSearch").addEventListener("input", function(e){
+    currentSearch = e.target.value;
+    renderJobs();
+  });
+
+  var jobDetailModalEl = document.getElementById("jobDetailModal");
+  var jobDetailModal = new bootstrap.Modal(jobDetailModalEl);
+  var currentJobForApply = null;
+
+  function openJobDetail(job){
+    document.getElementById("jobDetailTitle").textContent = job.title;
+    var badge = typeBadge[job.type];
+    document.getElementById("jobDetailBody").innerHTML =
+      '<p class="mb-1"><strong>' + job.company + '</strong> &middot; ' + job.location + '</p>' +
+      '<span class="badge-type ' + badge.cls + '">' + badge.label + '</span>' +
+      '<p class="mt-3 mb-2">' + job.desc + '</p>' +
+      '<h6 class="mt-3">Kualifikasi</h6>' +
+      '<ul class="small mb-0">' + job.qualifications.map(function(q){ return "<li>" + q + "</li>"; }).join("") + '</ul>';
+    currentJobForApply = job;
+    jobDetailModal.show();
+  }
+
+  function applyToJob(job){
+    currentJobForApply = job;
+    var msg = "Halo Admin HireMe, saya ingin melamar posisi *" + job.title + "* di *" + job.company + "* (" + job.location + ") yang saya lihat di website HireMe.";
+    window.open("https://wa.me/" + ADMIN_WA_NUMBER + "?text=" + encodeURIComponent(msg), "_blank");
+  }
+
+  document.getElementById("jobDetailApply").addEventListener("click", function(){
+    if(currentJobForApply){
+      applyToJob(currentJobForApply);
+      jobDetailModal.hide();
+    }
+  });
+
+  renderJobs();
+
+  /* ================= ABOUT: TEAM GRID ================= */
+  var team = [
+    {name:"Dina Maharani", role:"Lead HRD Consultant", photo:"https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&q=80&auto=format&fit=crop"},
+    {name:"Rangga Wibisono", role:"Interview Coach", photo:"https://images.unsplash.com/photo-1573164713988-8665fc963095?w=400&q=80&auto=format&fit=crop"},
+    {name:"Sari Wulandari", role:"CV & ATS Specialist", photo:"https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=400&q=80&auto=format&fit=crop"},
+    {name:"Fajar Nugroho", role:"Career Mentor", photo:"https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&q=80&auto=format&fit=crop"}
+  ];
+  var teamGrid = document.getElementById("teamGrid");
+  team.forEach(function(m){
+    var col = document.createElement("div");
+    col.className = "col-6 col-lg-3";
+    col.innerHTML =
+      '<img src="' + m.photo + '" alt="Foto ' + m.name + ', ' + m.role + ' di HireMe" class="team-photo mb-2">' +
+      '<h6 class="mb-0">' + m.name + '</h6><p class="small muted">' + m.role + '</p>';
+    teamGrid.appendChild(col);
+  });
+
+  /* ================= NEWS: ZIGZAG LIST ================= */
+  var articles = [
+    {tag:"Interview Tips", title:"7 Pertanyaan Interview yang Paling Sering Bikin Gugup — dan Cara Menjawabnya", excerpt:"Dari 'ceritakan tentang dirimu' sampai soal kelemahan, ini cara menjawab tanpa terdengar template.", img:"https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80&auto=format&fit=crop"},
+    {tag:"Magang", title:"Panduan Cari Magang untuk Mahasiswa Tingkat Akhir", excerpt:"Kapan waktu terbaik mulai apply magang, dan bagaimana memilih tempat magang yang relevan dengan karier jangka panjang.", img:"https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&q=80&auto=format&fit=crop"},
+    {tag:"Karier", title:"Tanda-Tanda Kamu Siap untuk Pindah Industri", excerpt:"Career switching bukan hal yang menakutkan jika kamu tahu skill apa yang perlu disiapkan lebih dulu.", img:"https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80&auto=format&fit=crop"}
+  ];
+  var newsList = document.getElementById("newsList");
+  articles.forEach(function(a, i){
+    var row = document.createElement("div");
+    row.className = "row g-4 align-items-center zigzag-item";
+    var imgCol = '<div class="col-md-5"><img src="' + a.img + '" alt="Ilustrasi artikel: ' + a.title + '"></div>';
+    var textCol =
+      '<div class="col-md-7">' +
+        '<span class="news-tag">' + a.tag + '</span>' +
+        '<h2 class="h4 mt-2">' + a.title + '</h2>' +
+        '<p class="small">' + a.excerpt + '</p>' +
+        '<a href="#" class="fw-semibold text-electric">Baca Selengkapnya <i class="bi bi-arrow-right"></i></a>' +
+      '</div>';
+    row.innerHTML = (i % 2 === 0) ? (imgCol + textCol) : (textCol + imgCol);
+    newsList.appendChild(row);
+  });
+
+  /* ================= BOOKING MODAL LOGIC ================= */
+  var packages = {
+    "Review CV": [
+      {value:"Paket Basic - Rp75.000", label:"Paket Basic - Rp75.000 (review tertulis)"},
+      {value:"Paket Premium - Rp150.000", label:"Paket Premium - Rp150.000 (review + sesi konsultasi 30 menit)"}
+    ],
+    "Practice Interview": [
+      {value:"Paket Single Session - Rp100.000", label:"Paket Single Session - Rp100.000 (1x simulasi, 45 menit)"},
+      {value:"Paket Intensif - Rp250.000", label:"Paket Intensif - Rp250.000 (3x simulasi + evaluasi akhir)"}
+    ]
+  };
+
+  var bookingServiceSelect = document.getElementById("bookingService");
+  var bookingPackageSelect = document.getElementById("bookingPackage");
+
+  function fillPackages(service){
+    bookingPackageSelect.innerHTML = "";
+    var opts = packages[service] || [];
+    if(!opts.length){
+      bookingPackageSelect.innerHTML = '<option value="" selected disabled>-- Pilih layanan dahulu --</option>';
+      return;
+    }
+    var placeholder = document.createElement("option");
+    placeholder.value = ""; placeholder.disabled = true; placeholder.selected = true;
+    placeholder.textContent = "-- Pilih paket --";
+    bookingPackageSelect.appendChild(placeholder);
+    opts.forEach(function(o){
+      var opt = document.createElement("option");
+      opt.value = o.value; opt.textContent = o.label;
+      bookingPackageSelect.appendChild(opt);
+    });
+  }
+
+  bookingServiceSelect.addEventListener("change", function(){
+    fillPackages(this.value);
+  });
+
+  // "Book Now" buttons on service cards pre-select the service
+  document.querySelectorAll("[data-service]").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var service = btn.getAttribute("data-service");
+      bookingServiceSelect.value = service;
+      fillPackages(service);
+      bootstrap.Modal.getOrCreateInstance(document.getElementById("bookingModal")).show();
+    });
+  });
+
+  var bookingForm = document.getElementById("bookingForm");
+  document.getElementById("bookingSubmit").addEventListener("click", function(){
+    if(!bookingForm.checkValidity()){
+      bookingForm.classList.add("was-validated");
+      return;
+    }
+    var fd = new FormData(bookingForm);
+    var name = fd.get("name");
+    var phone = fd.get("phone");
+    var service = fd.get("service");
+    var pkg = fd.get("package");
+    var date = fd.get("date");
+    var notes = fd.get("notes") || "-";
+
+    var msg = "Halo Admin HireMe, saya ingin booking layanan:\n" +
+      "Nama: " + name + "\n" +
+      "No. WhatsApp: " + phone + "\n" +
+      "Layanan: " + service + "\n" +
+      "Paket: " + pkg + "\n" +
+      "Tanggal: " + date + "\n" +
+      "Catatan: " + notes;
+
+    window.open("https://wa.me/" + ADMIN_WA_NUMBER + "?text=" + encodeURIComponent(msg), "_blank");
+    bootstrap.Modal.getOrCreateInstance(document.getElementById("bookingModal")).hide();
+    bookingForm.reset();
+    bookingForm.classList.remove("was-validated");
+    fillPackages("");
+  });
+
+  /* ================= CONTACT FORM ================= */
+  var contactForm = document.getElementById("contactForm");
+  contactForm.addEventListener("submit", function(e){
+    e.preventDefault();
+    if(!contactForm.checkValidity()){
+      contactForm.classList.add("was-validated");
+      return;
+    }
+    document.getElementById("contactSuccess").classList.remove("d-none");
+    contactForm.reset();
+    contactForm.classList.remove("was-validated");
+    setTimeout(function(){
+      document.getElementById("contactSuccess").classList.add("d-none");
+    }, 4000);
+  });
+
+})();
+</script>
+</body>
+</html>
