@@ -22,7 +22,7 @@
   --electric-blue:#0066FF;
   --sky-blue:#6BB1E4;
   --white:#FFFFFF;
-  --accent-orange:#FF6B00;
+  --accent-orange:#2196F3;
   --charcoal:#212529;
   --slate:#6C757D;
   --radius:12px;
@@ -48,7 +48,7 @@ a{ text-decoration:none; }
 /* ---------- Buttons ---------- */
 .btn{ border-radius:10px; font-weight:600; padding:.65rem 1.5rem; transition:all .3s ease; border:none; }
 .btn-orange{ background:var(--accent-orange); color:#fff; }
-.btn-orange:hover{ background:#e05f00; color:#fff; transform:translateY(-2px); box-shadow:0 8px 20px rgba(255,107,0,.35); }
+.btn-orange:hover{ background:#1976D2; color:#fff; transform:translateY(-2px); box-shadow:0 8px 20px rgba(33,150,243,.35); }
 .btn-outline-electric{ background:transparent; color:var(--electric-blue); border:2px solid var(--electric-blue); padding:.55rem 1.4rem; }
 .btn-outline-electric:hover{ background:var(--electric-blue); color:#fff; transform:translateY(-2px); }
 .btn-outline-white{ background:transparent; color:#fff; border:2px solid rgba(255,255,255,.7); padding:.55rem 1.4rem; }
@@ -128,7 +128,7 @@ a{ text-decoration:none; }
   box-shadow:var(--shadow-sm); opacity:.55; transform:scale(.92); transition:all .4s ease;
 }
 .testi-card.is-active{ opacity:1; transform:scale(1); background:#fff; border:2px solid var(--sky-blue); }
-.testi-card .stars{ color:var(--accent-orange); font-size:.85rem; margin-bottom:.5rem; }
+.testi-card .stars{ color:#FF6B00; font-size:.85rem; margin-bottom:.5rem; }
 .testi-avatar{ width:42px; height:42px; border-radius:50%; object-fit:cover; }
 .testi-controls{ display:flex; justify-content:center; gap:.75rem; margin-top:.5rem; }
 .testi-controls button{
@@ -161,13 +161,13 @@ a{ text-decoration:none; }
 }
 .badge-type{ font-weight:600; font-size:.72rem; padding:.35rem .7rem; border-radius:20px; }
 .badge-fulltime{ background:rgba(0,102,255,.12); color:var(--electric-blue); }
-.badge-parttime{ background:rgba(255,107,0,.12); color:var(--accent-orange); }
+.badge-parttime{ background:rgba(33,150,243,.12); color:var(--accent-orange); }
 .badge-magang{ background:rgba(107,177,228,.25); color:var(--royal-blue); }
 .job-empty{ display:none; text-align:center; padding:3rem 1rem; color:var(--slate); }
 
 /* ---------- About ---------- */
 .value-card{ border-radius:var(--radius); padding:1.5rem; border:1px solid #EAF1FB; height:100%; }
-.value-icon{ width:48px;height:48px;border-radius:12px;background:rgba(255,107,0,.1);color:var(--accent-orange); display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:.75rem; }
+.value-icon{ width:48px;height:48px;border-radius:12px;background:rgba(33,150,243,.1);color:var(--accent-orange); display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:.75rem; }
 .team-photo{ width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:var(--radius); }
 
 /* ---------- News ---------- */
@@ -203,7 +203,7 @@ footer h6{ color:#fff; font-weight:700; }
 /* ---------- Modal ---------- */
 .modal-content{ border-radius:16px; border:none; }
 .modal-header{ border-bottom:1px solid #EEF3FB; }
-.package-badge{ font-size:.8rem; background:rgba(255,107,0,.1); color:var(--accent-orange); padding:.3rem .7rem; border-radius:8px; display:inline-block; margin-top:.3rem; }
+.package-badge{ font-size:.8rem; background:rgba(33,150,243,.1); color:var(--accent-orange); padding:.3rem .7rem; border-radius:8px; display:inline-block; margin-top:.3rem; }
 
 /* Page switching */
 .page-section{ display:none; }
@@ -252,7 +252,7 @@ footer h6{ color:#fff; font-weight:700; }
     <div class="container">
       <div class="row align-items-center g-5">
         <div class="col-lg-6">
-          <span class="hero-badge"><i class="bi bi-patch-check-fill"></i> Dipercaya 1.200+ pencari kerja</span>
+          <span class="hero-badge"><i class="bi bi-patch-check-fill"></i> Dipercaya 9+ pencari kerja</span>
           <h1>Bantu Kariermu Tumbuh Lebih Cepat</h1>
           <p class="lead mt-3 mb-4">Review CV oleh HRD profesional, latihan interview yang realistis, dan akses lowongan kerja terverifikasi — semua dalam satu tempat.</p>
           <div class="d-flex flex-wrap gap-3">
@@ -334,7 +334,7 @@ footer h6{ color:#fff; font-weight:700; }
               <h5>Review CV</h5>
               <p class="small">CV kamu akan dinilai langsung oleh HRD profesional: format, kata kunci ATS, hingga cara menonjolkan pencapaian.</p>
               <div class="d-flex justify-content-between align-items-center">
-                <span class="price-tag">Mulai Rp75.000</span>
+                <span class="price-tag">Mulai Rp25.000</span>
                 <button class="btn btn-outline-electric btn-sm" data-service="Review CV">Book Now</button>
               </div>
             </div>
@@ -352,7 +352,7 @@ footer h6{ color:#fff; font-weight:700; }
               <h5>Practice Interview</h5>
               <p class="small">Latihan wawancara kerja dengan pertanyaan nyata dari industri, plus umpan balik yang bisa langsung dipraktikkan.</p>
               <div class="d-flex justify-content-between align-items-center">
-                <span class="price-tag">Mulai Rp100.000</span>
+                <span class="price-tag">Mulai Rp35.000</span>
                 <button class="btn btn-outline-electric btn-sm" data-service="Practice Interview">Book Now</button>
               </div>
             </div>
@@ -519,7 +519,7 @@ footer h6{ color:#fff; font-weight:700; }
           </div>
           <div class="info-row">
             <i class="bi bi-telephone"></i>
-            <div>+62 821-3999-7707</div>
+            <div>+62 823-3784-1184</div>
           </div>
           <div class="info-row">
             <i class="bi bi-envelope"></i>
@@ -649,6 +649,24 @@ footer h6{ color:#fff; font-weight:700; }
             <input type="date" class="form-control" name="date" required>
             <div class="invalid-feedback">Pilih tanggal sesi.</div>
           </div>
+          <div class="mb-3">
+            <label class="form-label">Jam</label>
+            <select class="form-select" name="time" id="bookingTime" required>
+              <option value="" selected disabled>-- Pilih jam --</option>
+              <option value="18.00 - 18.30">18.00 - 18.30</option>
+              <option value="18.30 - 19.00">18.30 - 19.00</option>
+              <option value="19.00 - 19.30">19.00 - 19.30</option>
+              <option value="19.30 - 20.00">19.30 - 20.00</option>
+              <option value="20.00 - 20.30">20.00 - 20.30</option>
+              <option value="20.30 - 21.00">20.30 - 21.00</option>
+            </select>
+            <div class="invalid-feedback">Pilih jam sesi.</div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Lampiran File (PDF & format lainnya, opsional)</label>
+            <input type="file" class="form-control" name="attachment" id="bookingAttachment" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+            <div class="form-text">Nama file akan disertakan di pesan WhatsApp. Karena tautan WhatsApp tidak bisa mengirim file otomatis, silakan lampirkan file ini secara manual saat chat WhatsApp terbuka.</div>
+          </div>
           <div class="mb-1">
             <label class="form-label">Catatan (opsional)</label>
             <textarea class="form-control" name="notes" rows="2"></textarea>
@@ -689,7 +707,7 @@ footer h6{ color:#fff; font-weight:700; }
 (function(){
   "use strict";
 
-  var ADMIN_WA_NUMBER = "6282139997607"; // ganti dengan nomor WhatsApp admin
+  var ADMIN_WA_NUMBER = "6282337841184"; // ganti dengan nomor WhatsApp admin
 
   /* ================= PAGE NAVIGATION ================= */
   var pages = document.querySelectorAll(".page-section");
@@ -929,12 +947,12 @@ footer h6{ color:#fff; font-weight:700; }
   /* ================= BOOKING MODAL LOGIC ================= */
   var packages = {
     "Review CV": [
-      {value:"Paket Basic - Rp75.000", label:"Paket Basic - Rp75.000 (review tertulis)"},
-      {value:"Paket Premium - Rp150.000", label:"Paket Premium - Rp150.000 (review + sesi konsultasi 30 menit)"}
+      {value:"Paket Basic - Rp25.000", label:"Paket Basic - Rp25.000 (review tertulis)"},
+      {value:"Paket Premium - Rp60.000", label:"Paket Premium - Rp60.000 (review + sesi konsultasi 30 menit)"}
     ],
     "Practice Interview": [
-      {value:"Paket Single Session - Rp100.000", label:"Paket Single Session - Rp100.000 (1x simulasi, 45 menit)"},
-      {value:"Paket Intensif - Rp250.000", label:"Paket Intensif - Rp250.000 (3x simulasi + evaluasi akhir)"}
+      {value:"Paket Single Session - Rp35.000", label:"Paket Single Session - Rp35.000 (1x simulasi, 30 menit)"},
+      {value:"Paket Premium - Rp60.000", label:"Paket Premium - Rp60.000 (review + sesi konsultasi 30 menit)"}
     ]
   };
 
@@ -985,6 +1003,9 @@ footer h6{ color:#fff; font-weight:700; }
     var service = fd.get("service");
     var pkg = fd.get("package");
     var date = fd.get("date");
+    var time = fd.get("time");
+    var attachmentFile = fd.get("attachment");
+    var attachmentName = (attachmentFile && attachmentFile.name) ? attachmentFile.name : "-";
     var notes = fd.get("notes") || "-";
 
     var msg = "Halo Admin HireMe, saya ingin booking layanan:\n" +
@@ -993,9 +1014,14 @@ footer h6{ color:#fff; font-weight:700; }
       "Layanan: " + service + "\n" +
       "Paket: " + pkg + "\n" +
       "Tanggal: " + date + "\n" +
+      "Jam: " + time + "\n" +
+      "Lampiran: " + attachmentName + "\n" +
       "Catatan: " + notes;
 
     window.open("https://wa.me/" + ADMIN_WA_NUMBER + "?text=" + encodeURIComponent(msg), "_blank");
+    if(attachmentFile && attachmentFile.name){
+      alert('Jangan lupa lampirkan file "' + attachmentName + '" secara manual di chat WhatsApp, karena tautan WhatsApp tidak bisa mengirim file secara otomatis.');
+    }
     bootstrap.Modal.getOrCreateInstance(document.getElementById("bookingModal")).hide();
     bookingForm.reset();
     bookingForm.classList.remove("was-validated");
