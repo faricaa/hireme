@@ -625,59 +625,83 @@ footer h6{ color:#fff; font-weight:700; }
       </div>
       <div class="modal-body">
         <form id="bookingForm" novalidate>
-          <div class="mb-3">
-            <label class="form-label">Nama Lengkap</label>
-            <input type="text" class="form-control" name="name" required>
-            <div class="invalid-feedback">Nama wajib diisi.</div>
+          <div id="bookingStep1">
+            <div class="mb-3">
+              <label class="form-label">Nama Lengkap</label>
+              <input type="text" class="form-control" name="name" required>
+              <div class="invalid-feedback">Nama wajib diisi.</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Nomor WhatsApp</label>
+              <input type="tel" class="form-control" name="phone" placeholder="08xxxxxxxxxx" pattern="[0-9]{9,14}" required>
+              <div class="invalid-feedback">Masukkan nomor WhatsApp yang valid (angka saja).</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Pilih Layanan</label>
+              <select class="form-select" name="service" id="bookingService" required>
+                <option value="" selected disabled>-- Pilih layanan --</option>
+                <option value="Review CV">Review CV</option>
+                <option value="Practice Interview">Practice Interview</option>
+              </select>
+              <div class="invalid-feedback">Pilih salah satu layanan.</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Paket</label>
+              <select class="form-select" name="package" id="bookingPackage" required>
+                <option value="" selected disabled>-- Pilih layanan dahulu --</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Tanggal</label>
+              <input type="date" class="form-control" name="date" required>
+              <div class="invalid-feedback">Pilih tanggal sesi.</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Jam</label>
+              <select class="form-select" name="time" id="bookingTime" required>
+                <option value="" selected disabled>-- Pilih jam --</option>
+                <option value="18.00 - 19.00">18.00 - 19.00</option>
+                <option value="19.00 - 20.00">19.00 - 20.00</option>
+                <option value="20.00 - 21.00">20.00 - 21.00</option>
+              </select>
+              <div class="invalid-feedback">Pilih jam sesi.</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Lampiran File (PDF & format lainnya, opsional)</label>
+              <input type="file" class="form-control" name="attachment" id="bookingAttachment" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+              <div class="form-text">Nama file akan disertakan di pesan WhatsApp. Karena tautan WhatsApp tidak bisa mengirim file otomatis, silakan lampirkan file ini secara manual saat chat WhatsApp terbuka.</div>
+            </div>
+            <div class="mb-1">
+              <button type="button" class="btn btn-orange w-100" id="bookingNextBtn">Next</button>
+            </div>
           </div>
-          <div class="mb-3">
-            <label class="form-label">Nomor WhatsApp</label>
-            <input type="tel" class="form-control" name="phone" placeholder="08xxxxxxxxxx" pattern="[0-9]{9,14}" required>
-            <div class="invalid-feedback">Masukkan nomor WhatsApp yang valid (angka saja).</div>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Pilih Layanan</label>
-            <select class="form-select" name="service" id="bookingService" required>
-              <option value="" selected disabled>-- Pilih layanan --</option>
-              <option value="Review CV">Review CV</option>
-              <option value="Practice Interview">Practice Interview</option>
-            </select>
-            <div class="invalid-feedback">Pilih salah satu layanan.</div>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Paket</label>
-            <select class="form-select" name="package" id="bookingPackage" required>
-              <option value="" selected disabled>-- Pilih layanan dahulu --</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Tanggal</label>
-            <input type="date" class="form-control" name="date" required>
-            <div class="invalid-feedback">Pilih tanggal sesi.</div>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Jam</label>
-            <select class="form-select" name="time" id="bookingTime" required>
-              <option value="" selected disabled>-- Pilih jam --</option>
-              <option value="18.00 - 19.00">18.00 - 19.00</option>
-              <option value="19.00 - 20.00">19.00 - 20.00</option>
-              <option value="20.00 - 21.00">20.00 - 21.00</option>
-            </select>
-            <div class="invalid-feedback">Pilih jam sesi.</div>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Lampiran File (PDF & format lainnya, opsional)</label>
-            <input type="file" class="form-control" name="attachment" id="bookingAttachment" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
-            <div class="form-text">Nama file akan disertakan di pesan WhatsApp. Karena tautan WhatsApp tidak bisa mengirim file otomatis, silakan lampirkan file ini secara manual saat chat WhatsApp terbuka.</div>
-          </div>
-          <div class="mb-1">
-            <label class="form-label">Catatan (opsional)</label>
-            <textarea class="form-control" name="notes" rows="2"></textarea>
+          <div id="bookingStep2" style="display:none;">
+            <div class="mb-3">
+              <label class="form-label">Pembayaran</label>
+              <div class="border rounded-3 p-3 text-center" style="background:#F8FBFF;">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=HireMe-Pembayaran-QRIS" alt="QR Code Pembayaran HireMe" class="img-fluid mb-2" style="max-width:220px;">
+                <div class="small muted mb-1">Scan QR code di atas untuk melakukan pembayaran</div>
+                <div class="fw-bold" style="color:var(--electric-blue);">Batas waktu pembayaran: <span id="paymentCountdown">30:00</span></div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Lampiran Bukti Pembayaran</label>
+              <input type="file" class="form-control" name="payment_proof" id="bookingPaymentProof" accept=".pdf,.jpg,.jpeg,.png">
+              <div class="invalid-feedback">Bukti pembayaran wajib dilampirkan.</div>
+              <div class="form-text">Upload screenshot/foto bukti transfer pembayaran kamu di sini (wajib diisi).</div>
+            </div>
+            <div class="mb-1">
+              <label class="form-label">Catatan (opsional)</label>
+              <textarea class="form-control" name="notes" rows="2"></textarea>
+            </div>
+            <div class="mb-1">
+              <button type="button" class="btn btn-outline-electric w-100" id="bookingBackBtn">Kembali</button>
+            </div>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-orange w-100" id="bookingSubmit">
+        <button type="button" class="btn btn-orange w-100" id="bookingSubmit" style="display:none;">
           <i class="bi bi-whatsapp me-1"></i> Kirim via WhatsApp
         </button>
       </div>
@@ -959,6 +983,93 @@ footer h6{ color:#fff; font-weight:700; }
     ]
   };
 
+  /* ================= BOOKING STEP 1 / STEP 2 + PAYMENT COUNTDOWN (30 menit) ================= */
+  var bookingStep1El = document.getElementById("bookingStep1");
+  var bookingStep2El = document.getElementById("bookingStep2");
+  var bookingNextBtn = document.getElementById("bookingNextBtn");
+  var bookingBackBtn = document.getElementById("bookingBackBtn");
+  var bookingSubmitBtn = document.getElementById("bookingSubmit");
+  var bookingPaymentProofInput = document.getElementById("bookingPaymentProof");
+  var paymentCountdownEl = document.getElementById("paymentCountdown");
+  var PAYMENT_DEADLINE_KEY = "hireme_payment_deadline";
+  var paymentTimerInterval = null;
+
+  function updatePaymentCountdownDisplay(totalSeconds){
+    if(!paymentCountdownEl) return;
+    if(totalSeconds <= 0){
+      paymentCountdownEl.textContent = "00:00 (Waktu habis)";
+      return;
+    }
+    var m = Math.floor(totalSeconds / 60);
+    var s = totalSeconds % 60;
+    paymentCountdownEl.textContent = (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s);
+  }
+
+  function tickPaymentCountdown(){
+    var deadline = parseInt(localStorage.getItem(PAYMENT_DEADLINE_KEY), 10);
+    if(!deadline){ return; }
+    var remaining = Math.floor((deadline - Date.now()) / 1000);
+    if(remaining <= 0){
+      updatePaymentCountdownDisplay(0);
+      if(paymentTimerInterval){ clearInterval(paymentTimerInterval); paymentTimerInterval = null; }
+      return;
+    }
+    updatePaymentCountdownDisplay(remaining);
+  }
+
+  function startOrResumePaymentCountdown(){
+    var deadline = parseInt(localStorage.getItem(PAYMENT_DEADLINE_KEY), 10);
+    var now = Date.now();
+    if(!deadline || deadline <= now){
+      deadline = now + 30 * 60 * 1000; // 30 menit dari sekarang
+      localStorage.setItem(PAYMENT_DEADLINE_KEY, String(deadline));
+    }
+    tickPaymentCountdown();
+    if(paymentTimerInterval){ clearInterval(paymentTimerInterval); }
+    paymentTimerInterval = setInterval(tickPaymentCountdown, 1000);
+  }
+
+  function showBookingStep1(){
+    if(bookingStep1El){ bookingStep1El.style.display = ""; }
+    if(bookingStep2El){ bookingStep2El.style.display = "none"; }
+    if(bookingSubmitBtn){ bookingSubmitBtn.style.display = "none"; }
+    if(bookingPaymentProofInput){ bookingPaymentProofInput.removeAttribute("required"); }
+  }
+
+  function showBookingStep2(){
+    if(bookingStep1El){ bookingStep1El.style.display = "none"; }
+    if(bookingStep2El){ bookingStep2El.style.display = ""; }
+    if(bookingSubmitBtn){ bookingSubmitBtn.style.display = ""; }
+    if(bookingPaymentProofInput){ bookingPaymentProofInput.setAttribute("required", "required"); }
+    startOrResumePaymentCountdown();
+  }
+
+  if(bookingNextBtn){
+    bookingNextBtn.addEventListener("click", function(){
+      if(!bookingForm.checkValidity()){
+        bookingForm.classList.add("was-validated");
+        return;
+      }
+      showBookingStep2();
+    });
+  }
+
+  if(bookingBackBtn){
+    bookingBackBtn.addEventListener("click", function(){
+      showBookingStep1();
+    });
+  }
+
+  var bookingModalEl = document.getElementById("bookingModal");
+  if(bookingModalEl){
+    bookingModalEl.addEventListener("shown.bs.modal", function(){
+      showBookingStep1();
+    });
+    bookingModalEl.addEventListener("hidden.bs.modal", function(){
+      if(paymentTimerInterval){ clearInterval(paymentTimerInterval); paymentTimerInterval = null; }
+    });
+  }
+
   var bookingServiceSelect = document.getElementById("bookingService");
   var bookingPackageSelect = document.getElementById("bookingPackage");
 
@@ -1009,6 +1120,8 @@ footer h6{ color:#fff; font-weight:700; }
     var time = fd.get("time");
     var attachmentFile = fd.get("attachment");
     var attachmentName = (attachmentFile && attachmentFile.name) ? attachmentFile.name : "-";
+    var paymentProofFile = fd.get("payment_proof");
+    var paymentProofName = (paymentProofFile && paymentProofFile.name) ? paymentProofFile.name : "-";
     var notes = fd.get("notes") || "-";
 
     var msg = "Halo Admin HireMe, saya ingin booking layanan:\n" +
@@ -1019,16 +1132,18 @@ footer h6{ color:#fff; font-weight:700; }
       "Tanggal: " + date + "\n" +
       "Jam: " + time + "\n" +
       "Lampiran: " + attachmentName + "\n" +
+      "Bukti Pembayaran: " + paymentProofName + "\n" +
       "Catatan: " + notes;
 
     window.open("https://wa.me/" + ADMIN_WA_NUMBER + "?text=" + encodeURIComponent(msg), "_blank");
-    if(attachmentFile && attachmentFile.name){
-      alert('Jangan lupa lampirkan file "' + attachmentName + '" secara manual di chat WhatsApp, karena tautan WhatsApp tidak bisa mengirim file secara otomatis.');
-    }
+    alert('Jangan lupa lampirkan file "' + attachmentName + '" dan bukti pembayaran "' + paymentProofName + '" secara manual di chat WhatsApp, karena tautan WhatsApp tidak bisa mengirim file secara otomatis.');
+    if(paymentTimerInterval){ clearInterval(paymentTimerInterval); paymentTimerInterval = null; }
+    localStorage.removeItem(PAYMENT_DEADLINE_KEY);
     bootstrap.Modal.getOrCreateInstance(document.getElementById("bookingModal")).hide();
     bookingForm.reset();
     bookingForm.classList.remove("was-validated");
     fillPackages("");
+    showBookingStep1();
   });
 
   /* ================= CONTACT FORM ================= */
