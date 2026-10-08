@@ -155,6 +155,14 @@ a{ text-decoration:none; }
   transition:all .3s ease; background:#fff;
 }
 .job-card:hover{ box-shadow:var(--shadow-sm); transform:translateY(-4px); border-color:transparent; }
+
+/* ===== POSTER JOB CARD (BARU) ===== */
+.job-poster{
+  display:block; width:100%; aspect-ratio:4/5; object-fit:cover;
+  border-radius:10px; margin-bottom:1rem; background:#EAF1FB;
+  border:1px solid #EEF3FB;
+}
+
 .job-logo{
   width:50px; height:50px; border-radius:10px; background:rgba(11,77,162,.08); color:var(--royal-blue);
   display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1.1rem;
@@ -823,16 +831,107 @@ footer h6{ color:#fff; font-weight:700; }
   renderTestimonials();
 
   /* ================= JOB LISTINGS ================= */
-  var jobs = [
-    {title:"Social Media Specialist", company:"Nusantara Digital", location:"Surakarta", type:"fulltime", posted:"2 hari lalu", desc:"Mengelola konten dan strategi media sosial perusahaan.", qualifications:["Min. D3/S1 semua jurusan","Menguasai Canva/Adobe","Paham tren media sosial","Kreatif dan komunikatif"]},
-    {title:"Admin Gudang", company:"Sentosa Logistik", location:"Semarang", type:"parttime", posted:"1 hari lalu", desc:"Mengelola pencatatan stok barang masuk dan keluar.", qualifications:["Min. SMA/SMK sederajat","Teliti dan disiplin","Bisa Ms. Excel dasar","Siap kerja shift"]},
-    {title:"Marketing Intern", company:"Kopi Ranting", location:"Yogyakarta", type:"magang", posted:"3 hari lalu", desc:"Membantu tim marketing menyusun campaign promosi.", qualifications:["Mahasiswa aktif semester akhir","Aktif di media sosial","Mau belajar hal baru","Bisa magang min. 3 bulan"]},
-    {title:"Staff Finance", company:"Mitra Sejahtera Group", location:"Surakarta", type:"fulltime", posted:"5 hari lalu", desc:"Menangani pencatatan transaksi dan laporan keuangan bulanan.", qualifications:["S1 Akuntansi/Keuangan","Paham dasar perpajakan","Teliti dan jujur","Bisa menggunakan software akuntansi"]},
-    {title:"Content Writer (Part-Time)", company:"Warta Karier", location:"Remote", type:"parttime", posted:"6 jam lalu", desc:"Menulis artikel seputar tips karier dan dunia kerja.", qualifications:["Portofolio tulisan","Mampu riset mandiri","Deadline-oriented","Bisa kerja remote"]},
-    {title:"HR Intern", company:"Bangun Karya Nusantara", location:"Surakarta", type:"magang", posted:"1 minggu lalu", desc:"Membantu proses rekrutmen dan administrasi HR.", qualifications:["Mahasiswa Psikologi/Manajemen","Komunikatif","Rapi dalam administrasi","Magang min. 4 bulan"]},
-    {title:"Graphic Designer", company:"Visualka Studio", location:"Solo Baru", type:"fulltime", posted:"4 hari lalu", desc:"Membuat materi visual untuk kebutuhan klien dan internal.", qualifications:["Min. D3 DKV/Desain","Mahir Figma & Adobe Suite","Punya portofolio","Bisa kerja dengan deadline ketat"]},
-    {title:"Customer Service (Part-Time)", company:"Toko Ceria Online", location:"Surakarta", type:"parttime", posted:"2 hari lalu", desc:"Melayani pertanyaan dan pesanan pelanggan via chat.", qualifications:["Min. SMA sederajat","Ramah dan sabar","Bisa kerja sore-malam","Terbiasa aplikasi chat"]}
-  ];
+  /* Field "poster" = lokasi file gambar poster tiap lowongan.
+     Simpan gambar poster di folder gambar/ lalu ganti nama file sesuai milikmu.
+     Kalau file tidak ditemukan, otomatis tampil gambar placeholder. */
+     var jobs = [
+  {
+    title: "Social Media Specialist",
+    company: "Nusantara Digital",
+    location: "Surakarta",
+    type: "fulltime",
+    posted: "2 hari lalu",
+    poster: "gambar/poster-social-media.jpg",
+    applyLink: "https://example.com/lamar/nusantara-digital", // GANTI dengan link perusahaan
+    desc: "Mengelola konten dan strategi media sosial perusahaan.",
+    qualifications: ["Min. D3/S1 semua jurusan", "Menguasai Canva/Adobe", "Paham tren media sosial", "Kreatif dan komunikatif"]
+  },
+  {
+    title: "Front Staf",
+    company: "Boomery Group",
+    location: "Keprabon, Surakarta",
+    type: "parttime",
+    posted: "1 hari lalu",
+    poster: "gambar/poster boomery.png", // disesuaikan agar sama dengan key 'poster'
+    applyLink: "https://example.com/lamar/boomery-group", // GANTI dengan link perusahaan
+    desc: "Mengelola pencatatan stok barang masuk dan keluar.",
+    qualifications: ["Min. SMA/SMK sederajat", "Teliti dan disiplin", "Bisa Ms. Excel dasar", "Siap kerja shift"]
+  },
+  {
+    title: "Marketing Intern",
+    company: "Kopi Ranting",
+    location: "Yogyakarta",
+    type: "magang",
+    posted: "3 hari lalu",
+    poster: "gambar/poster-marketing-intern.jpg",
+    applyLink: "https://example.com/lamar/kopi-ranting", // GANTI dengan link perusahaan
+    desc: "Membantu tim marketing menyusun campaign promosi.",
+    qualifications: ["Mahasiswa aktif semester akhir", "Aktif di media sosial", "Mau belajar hal baru", "Bisa magang min. 3 bulan"]
+  },
+  {
+    title: "Staff Finance",
+    company: "Mitra Sejahtera Group",
+    location: "Surakarta",
+    type: "fulltime",
+    posted: "5 hari lalu",
+    poster: "gambar/poster-staff-finance.jpg",
+    applyLink: "https://example.com/lamar/mitra-sejahtera", // GANTI dengan link perusahaan
+    desc: "Menangani pencatatan transaksi dan laporan keuangan bulanan.",
+    qualifications: ["S1 Akuntansi/Keuangan", "Paham dasar perpajakan", "Teliti dan jujur", "Bisa menggunakan software akuntansi"]
+  },
+  {
+    title: "Barista/Kasir",
+    company: "Bento Kopi",
+    location: "Surakarta",
+    type: "parttime",
+    posted: "6 jam lalu",
+    poster: "gambar/poster bento.png",
+    applyLink: "https://example.com/lamar/bento-kopi", // GANTI dengan link perusahaan
+    desc: "Membuat minuman dan melayani transaksi kasir.",
+    qualifications: ["Min. SMA/SMK sederajat", "Ramah dan komunikatif", "Jujur dan teliti", "Siap kerja shift"]
+  },
+  {
+    title: "HR Intern",
+    company: "Bangun Karya Nusantara",
+    location: "Surakarta",
+    type: "magang",
+    posted: "1 minggu lalu",
+    poster: "gambar/poster-hr-intern.jpg",
+    applyLink: "https://example.com/lamar/bangun-karya", // GANTI dengan link perusahaan
+    desc: "Membantu proses rekrutmen dan administrasi HR.",
+    qualifications: ["Mahasiswa Psikologi/Manajemen", "Komunikatif", "Rapi dalam administrasi", "Magang min. 4 bulan"]
+  },
+  {
+    title: "Graphic Designer",
+    company: "Visualka Studio",
+    location: "Solo Baru",
+    type: "fulltime",
+    posted: "4 hari lalu",
+    poster: "gambar/poster-graphic-designer.jpg",
+    applyLink: "https://example.com/lamar/visualka-studio", // GANTI dengan link perusahaan
+    desc: "Membuat materi visual untuk kebutuhan klien dan internal.",
+    qualifications: ["Min. D3 DKV/Desain", "Mahir Figma & Adobe Suite", "Punya portofolio", "Bisa kerja dengan deadline ketat"]
+  },
+  {
+    title: "Penjaga Stand Makanan",
+    company: "Bekonang",
+    location: "Surakarta",
+    type: "parttime",
+    posted: "2 hari lalu",
+    poster: "gambar/poster bekonang.png",
+    applyLink: "https://docs.google.com/forms/d/e/1FAIpQLSePQqeVKgW2yDMJu68dbDbfWFfeJm-IjJC2ceG1JtcZ8FvN7g/viewform", // GANTI dengan link perusahaan
+    desc: "Melayani pesanan pelanggan dan menjaga kebersihan stand.",
+    qualifications: ["Sopan, rajin, jujur, dan cekatan dalam bekerja. Serius dalam menjalankan pekerjaan serta peduli terhadap kebersihan. Diutamakan yang memiliki kemampuan membuat gorengan dan minuman. Bersedia bergabung dan mulai bekerja secepatnya."]
+  }
+];
+
+  /* Gambar pengganti kalau file poster tidak ditemukan */
+  var POSTER_FALLBACK = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" viewBox="0 0 400 500">' +
+    '<rect width="400" height="500" fill="#EAF1FB"/>' +
+    '<text x="200" y="255" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#0B4DA2" text-anchor="middle">Poster Lowongan</text>' +
+    '</svg>'
+  );
 
   var jobGrid = document.getElementById("jobGrid");
   var jobEmpty = document.getElementById("jobEmpty");
@@ -858,6 +957,7 @@ footer h6{ color:#fff; font-weight:700; }
       col.className = "col-md-6 col-lg-4";
       col.innerHTML =
         '<div class="job-card">' +
+          '<img class="job-poster" src="' + (j.poster || POSTER_FALLBACK) + '" alt="Poster lowongan ' + j.title + ' di ' + j.company + '" loading="lazy">' +
           '<div class="d-flex justify-content-between align-items-start mb-3">' +
             '<div class="job-logo">' + j.company.charAt(0) + '</div>' +
             '<span class="badge-type ' + badge.cls + '">' + badge.label + '</span>' +
@@ -871,6 +971,14 @@ footer h6{ color:#fff; font-weight:700; }
           '</div>' +
         '</div>';
       jobGrid.appendChild(col);
+    });
+
+    // fallback kalau gambar poster gagal dimuat
+    jobGrid.querySelectorAll(".job-poster").forEach(function(img){
+      img.addEventListener("error", function onPosterError(){
+        img.removeEventListener("error", onPosterError);
+        img.src = POSTER_FALLBACK;
+      });
     });
 
     // attach listeners for this filtered set
