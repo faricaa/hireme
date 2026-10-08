@@ -1021,15 +1021,15 @@ footer h6{ color:#fff; font-weight:700; }
       '<p class="mt-3 mb-2">' + job.desc + '</p>' +
       '<h6 class="mt-3">Kualifikasi</h6>' +
       '<ul class="small mb-0">' + job.qualifications.map(function(q){ return "<li>" + q + "</li>"; }).join("") + '</ul>';
-    currentJobForApply = job;
+    currentJobFor = job;
     jobDetailModal.show();
   }
 
-  function applyToJob(job){
-    currentJobForApply = job;
-    var msg = "Halo Admin HireMe, saya ingin melamar posisi *" + job.title + "* di *" + job.company + "* (" + job.location + ") yang saya lihat di website HireMe.";
-    window.open("https://wa.me/" + ADMIN_WA_NUMBER + "?text=" + encodeURIComponent(msg), "_blank");
-  }
+  function applyToJob(job) {
+  currentJobForApply = job;
+  // Cukup buka URL Google Form tanpa tambahan nomor WA atau pesan
+  window.open("https://docs.google.com/forms/d/e/1FAIpQLSePQqeVKgW2yDMJu68dbDbfWFfeJm-IjJC2ceG1JtcZ8FvN7g/viewform", "_blank");
+}
 
   document.getElementById("jobDetailApply").addEventListener("click", function(){
     if(currentJobForApply){
