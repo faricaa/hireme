@@ -1747,7 +1747,7 @@ footer h6{ color:#fff; font-weight:700; }
 
     poster: "gambar/poster boomery.png", // disesuaikan agar sama dengan key 'poster'
 
-    applyLink: "https://bloomerypatisserie.com/career/part-time-front-staff-joymart-tugu-yogyakarta", // GANTI dengan link perusahaan
+    applyLink: "", // GANTI dengan link perusahaan
 
     desc: "Mengelola pencatatan stok barang masuk dan keluar.",
 
@@ -1813,7 +1813,7 @@ footer h6{ color:#fff; font-weight:700; }
 
     poster: "gambar/poster bento.png",
 
-    applyLink: "https://docs.google.com/forms/d/e/1FAIpQLSdivNaZrfoddeo9AWVsWNzCfqLs6mmWTJ8fExw7X50ymaWl0Q/viewform", // GANTI dengan link perusahaan
+    applyLink: "", // GANTI dengan link perusahaan
 
     desc: "Membuat minuman dan melayani transaksi kasir.",
 
@@ -2234,16 +2234,29 @@ footer h6{ color:#fff; font-weight:700; }
       var link = document.getElementById("uploadJobLink").value.trim();
       var imageChoice = form.querySelector('input[name="imageEmailOption"]:checked');
       var proofChoice = form.querySelector('input[name="proofEmailOption"]:checked');
-      var body = "Pengajuan upload info lowongan HireMe\\n\\nNama: " + name +
-        "\\nNo. HP: " + phone + "\\nDeskripsi jobs: " + desc +
-        "\\nLink pengumpulan CV: " + link +
-        "\\nLampiran gambar: " + (imageChoice ? imageChoice.value : "Tidak dipilih") +
-        "\\nBukti pembayaran: " + (proofChoice ? proofChoice.value : "Tidak dipilih");
-      window.location.href = "mailto:hireamejob@gmail.com?subject=" +
+      var body = "Pengajuan upload info lowongan HireMe\n\nNama: " + name +
+        "\nNo. HP: " + phone + "\nDeskripsi jobs: " + desc +
+        "\nLink pengumpulan CV: " + link +
+        "\nLampiran gambar: " + (imageChoice ? imageChoice.value : "Tidak dipilih") +
+        "\nBukti pembayaran: " + (proofChoice ? proofChoice.value : "Tidak dipilih");
+      var composeUrl = "https://mail.google.com/mail/?view=cm&fs=1&to=hireamejob@gmail.com&su=" +
         encodeURIComponent("Pengajuan Upload Lowongan - " + name) + "&body=" + encodeURIComponent(body);
+      // Coba buka email. Jika popup diblokir, proses reset tetap dilakukan.
+      var emailWindow = window.open(composeUrl, "_blank", "noopener,noreferrer");
+      
+
+      // Setelah tombol "Kirim melalui Email" ditekan, timer dan form selalu direset.
       if (timer) { clearInterval(timer); timer = null; }
       localStorage.removeItem(deadlineKey);
       localStorage.removeItem(draftKey);
+
+      form.reset();
+      form.classList.remove("was-validated");
+      showStep1();
+      document.getElementById("uploadJobCountdown").textContent = "30:00";
+
+      var uploadModal = bootstrap.Modal.getInstance(document.getElementById("uploadJobModal"));
+      if (uploadModal) uploadModal.hide();
     });
   })();
 
