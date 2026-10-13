@@ -1352,11 +1352,9 @@ footer h6{ color:#fff; font-weight:700; }
 
             <div class="mb-3">
 
-              <label class="form-label">Lampiran File (PDF & format lainnya, opsional)</label>
+              <label class="form-label">Lampiran (opsional)</label>
 
-              <input type="file" class="form-control" name="attachment" id="bookingAttachment" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
-
-              <div class="form-text">Nama file akan disertakan di pesan WhatsApp. Karena tautan WhatsApp tidak bisa mengirim file otomatis, silakan lampirkan file ini secara manual saat chat WhatsApp terbuka.</div>
+              <div class="form-check"><input class="form-check-input" type="radio" name="attachmentOption" id="bookingAttachmentOption" value="Lampirkan kembali setelah ini dialihkan"><label class="form-check-label text-danger fw-bold" for="bookingAttachmentOption">Lampirkan kembali setelah ini dialihkan</label></div>
 
             </div>
 
@@ -1390,11 +1388,9 @@ footer h6{ color:#fff; font-weight:700; }
 
               <label class="form-label">Lampiran Bukti Pembayaran</label>
 
-              <input type="file" class="form-control" name="payment_proof" id="bookingPaymentProof" accept=".pdf,.jpg,.jpeg,.png">
+              <div class="form-check"><input class="form-check-input" type="radio" name="paymentProofOption" id="bookingPaymentProof" value="Lampirkan kembali setelah ini dialihkan" required><label class="form-check-label text-danger fw-bold" for="bookingPaymentProof">Lampirkan kembali setelah ini dialihkan</label></div>
 
-              <div class="invalid-feedback">Bukti pembayaran wajib dilampirkan.</div>
-
-              <div class="form-text">Upload screenshot/foto bukti transfer pembayaran kamu di sini (wajib diisi).</div>
+              <div class="form-text">Lampirkan bukti pembayaran secara manual setelah chat WhatsApp terbuka.</div>
 
             </div>
 
@@ -1448,13 +1444,11 @@ footer h6{ color:#fff; font-weight:700; }
         <form id="uploadJobForm" novalidate>
           <div id="uploadJobStep1">
             <div class="mb-3"><label class="form-label" for="uploadJobName">Nama</label><input class="form-control" id="uploadJobName" name="name" required><div class="invalid-feedback">Nama wajib diisi.</div></div>
-            <div class="mb-3"><label class="form-label" for="uploadJobPhone">No. HP</label><input class="form-control" id="uploadJobPhone" name="phone" type="tel" pattern="[0-9+() -]{9,18}" required><div class="invalid-feedback">Masukkan nomor HP yang valid.</div></div>
+            <div class="mb-3"><label class="form-label" for="uploadJobPhone">No. HP</label><input class="form-control" id="uploadJobPhone" name="phone" type="tel" inputmode="numeric" minlength="12" maxlength="16" required><div class="invalid-feedback">Nomor HP harus terdiri dari minimal 12 angka.</div></div>
             <div class="mb-3"><label class="form-label" for="uploadJobDescription">Deskripsi singkat jobs</label><textarea class="form-control" id="uploadJobDescription" name="description" rows="4" required></textarea><div class="invalid-feedback">Deskripsi lowongan wajib diisi.</div></div>
             <div class="mb-3">
-              <label class="form-label" for="uploadJobImage">Lampiran gambar lowongan</label>
-              <input class="form-control" id="uploadJobImage" name="image" type="file" accept="image/*">
-              <div class="form-text">File tidak dapat dilampirkan otomatis melalui email web; jika memilih opsi merah, lampirkan file secara manual setelah email terbuka.</div>
-              <div class="form-check mt-2"><input class="form-check-input" type="radio" name="imageEmailOption" id="uploadImageEmail" value="Lampirkan pada email yang setelah ini dialihkan" required><label class="form-check-label text-danger fw-bold" for="uploadImageEmail">Lampirkan pada email yang setelah ini dialihkan</label></div>
+              <label class="form-label">Lampiran gambar lowongan</label>
+              <div class="form-check"><input class="form-check-input" type="radio" name="imageEmailOption" id="uploadImageEmail" value="Lampirkan pada email yang setelah ini dialihkan" required><label class="form-check-label text-danger fw-bold" for="uploadImageEmail">Lampirkan pada email yang setelah ini dialihkan</label></div>
             </div>
             <div class="mb-3"><label class="form-label" for="uploadJobLink">Link form pengumpulan CV (wajib menggunakan https://)</label><input class="form-control" id="uploadJobLink" name="cvLink" type="url" placeholder="https://..." pattern="https://.+" required><div class="invalid-feedback">Masukkan link HTTPS, misalnya Google Form atau WhatsApp.</div></div>
             <button type="button" class="btn btn-orange w-100" id="uploadJobNext">Next</button>
@@ -1467,10 +1461,9 @@ footer h6{ color:#fff; font-weight:700; }
               <div class="fw-bold text-royal">Batas waktu pembayaran: <span id="uploadPaymentCountdown">30:00</span></div>
             </div>
             <div class="mb-3">
-              <label class="form-label" for="uploadPaymentProof">Lampiran bukti pembayaran</label>
-              <input class="form-control" id="uploadPaymentProof" name="paymentProof" type="file" accept="image/*,.pdf">
-              <div class="form-check mt-2"><input class="form-check-input" type="radio" name="proofEmailOption" id="uploadProofEmail" value="Lampirkan pada email yang setelah ini dialihkan" required><label class="form-check-label text-danger fw-bold" for="uploadProofEmail">Lampirkan pada email yang setelah ini dialihkan</label></div>
-              <div class="form-text">Lampirkan bukti secara manual setelah email terbuka.</div>
+              <label class="form-label">Lampiran bukti pembayaran</label>
+              <div class="form-check mt-2"><input class="form-check-input" type="radio" name="proofEmailOption" id="uploadProofEmail" value="Lampirkan kembali setelah ini dialihkan" required><label class="form-check-label text-danger fw-bold" for="uploadProofEmail">Lampirkan kembali setelah ini dialihkan</label></div>
+              <div class="form-text">Lampirkan bukti pembayaran secara manual setelah email terbuka.</div>
             </div>
             <button type="button" class="btn btn-outline-electric w-100 mb-2" id="uploadJobBack">Kembali</button>
             <button type="submit" class="btn btn-orange w-100" id="uploadJobSubmit">Kirim melalui Email</button>
@@ -1864,7 +1857,7 @@ footer h6{ color:#fff; font-weight:700; }
 
     poster: "gambar/poster-graphic-designer.jpg",
 
-    applyLink: "https://docs.google.com/forms/d/e/1FAIpQLSePQqeVKgW2yDMJu68dbDbfWFfeJm-IjJC2ceG1JtcZ8FvN7g/viewform", // GANTI dengan link perusahaan
+    applyLink: "", // GANTI dengan link perusahaan
 
     desc: "Membuat materi visual untuk kebutuhan klien dan internal.",
 
@@ -2136,7 +2129,27 @@ footer h6{ color:#fff; font-weight:700; }
     var back = document.getElementById("uploadJobBack");
     var countdown = document.getElementById("uploadPaymentCountdown");
     var deadlineKey = "hireme_upload_job_payment_deadline";
+    var draftKey = "hireme_upload_job_draft";
     var timer = null;
+    var phoneInput = document.getElementById("uploadJobPhone");
+    var draftFields = ["uploadJobName", "uploadJobPhone", "uploadJobDescription", "uploadJobLink"];
+    function saveDraft(){
+      var draft = {};
+      draftFields.forEach(function(id){ draft[id] = document.getElementById(id).value; });
+      localStorage.setItem(draftKey, JSON.stringify(draft));
+    }
+    function restoreDraft(){
+      try {
+        var draft = JSON.parse(localStorage.getItem(draftKey) || "{}");
+        draftFields.forEach(function(id){ if (draft[id] !== undefined) document.getElementById(id).value = draft[id]; });
+      } catch(e) {}
+    }
+    restoreDraft();
+    draftFields.forEach(function(id){ document.getElementById(id).addEventListener("input", saveDraft); });
+    phoneInput.addEventListener("input", function(){
+      var digits = phoneInput.value.replace(/\D/g, "");
+      phoneInput.setCustomValidity(digits.length >= 12 ? "" : "Nomor HP harus terdiri dari minimal 12 angka.");
+    });
 
     function renderCountdown(){
       var deadline = Number(localStorage.getItem(deadlineKey) || 0);
@@ -2151,9 +2164,18 @@ footer h6{ color:#fff; font-weight:700; }
       step1.style.display = "none";
       step2.style.display = "";
       var deadline = Number(localStorage.getItem(deadlineKey) || 0);
-      if (!deadline || deadline <= Date.now()) {
+      if (!deadline) {
         deadline = Date.now() + 30 * 60 * 1000;
         localStorage.setItem(deadlineKey, String(deadline));
+      }
+      if (deadline <= Date.now()) {
+        alert("Waktu pembayaran 30 menit sudah habis. Silakan isi ulang formulir upload lowongan.");
+        localStorage.removeItem(deadlineKey);
+        localStorage.removeItem(draftKey);
+        form.reset();
+        form.classList.remove("was-validated");
+        showStep1();
+        return;
       }
       renderCountdown();
       if (timer) clearInterval(timer);
@@ -2165,6 +2187,8 @@ footer h6{ color:#fff; font-weight:700; }
     }
     next.addEventListener("click", function(){
       var fields = ["uploadJobName","uploadJobPhone","uploadJobDescription","uploadJobLink"];
+      var digits = phoneInput.value.replace(/\D/g, "");
+      phoneInput.setCustomValidity(digits.length >= 12 ? "" : "Nomor HP harus terdiri dari minimal 12 angka.");
       var valid = fields.every(function(id){ return document.getElementById(id).checkValidity(); });
       var imageChoice = form.querySelector('input[name="imageEmailOption"]:checked');
       if (!valid || !imageChoice) {
@@ -2177,8 +2201,16 @@ footer h6{ color:#fff; font-weight:700; }
     });
     back.addEventListener("click", showStep1);
     document.getElementById("uploadJobModal").addEventListener("shown.bs.modal", function(){
-      // Resume the existing deadline if payment step was already opened.
-      if (Number(localStorage.getItem(deadlineKey) || 0) > Date.now() && step2.style.display !== "none") showStep2();
+      var deadline = Number(localStorage.getItem(deadlineKey) || 0);
+      if (deadline && deadline > Date.now()) showStep2();
+      else if (deadline && deadline <= Date.now()) {
+        alert("Waktu pembayaran 30 menit sudah habis. Silakan isi ulang formulir upload lowongan.");
+        localStorage.removeItem(deadlineKey);
+        localStorage.removeItem(draftKey);
+        form.reset();
+        form.classList.remove("was-validated");
+        showStep1();
+      }
     });
     document.getElementById("uploadJobModal").addEventListener("hidden.bs.modal", function(){
       if (timer) { clearInterval(timer); timer = null; }
@@ -2188,26 +2220,30 @@ footer h6{ color:#fff; font-weight:700; }
       if (!form.checkValidity()) { form.classList.add("was-validated"); form.reportValidity(); return; }
       var deadline = Number(localStorage.getItem(deadlineKey) || 0);
       if (!deadline || deadline <= Date.now()) {
-        alert("Waktu pembayaran sudah habis. Silakan mulai ulang proses upload lowongan.");
+        alert("Waktu pembayaran 30 menit sudah habis. Silakan isi ulang formulir upload lowongan.");
+        localStorage.removeItem(deadlineKey);
+        localStorage.removeItem(draftKey);
+        form.reset();
+        form.classList.remove("was-validated");
+        showStep1();
         return;
       }
       var name = document.getElementById("uploadJobName").value.trim();
       var phone = document.getElementById("uploadJobPhone").value.trim();
       var desc = document.getElementById("uploadJobDescription").value.trim();
       var link = document.getElementById("uploadJobLink").value.trim();
-      var image = document.getElementById("uploadJobImage").files[0];
-      var proof = document.getElementById("uploadPaymentProof").files[0];
+      var imageChoice = form.querySelector('input[name="imageEmailOption"]:checked');
+      var proofChoice = form.querySelector('input[name="proofEmailOption"]:checked');
       var body = "Pengajuan upload info lowongan HireMe\\n\\nNama: " + name +
         "\\nNo. HP: " + phone + "\\nDeskripsi jobs: " + desc +
         "\\nLink pengumpulan CV: " + link +
-        "\\nLampiran gambar: " + (image ? image.name : "Akan dilampirkan manual melalui email") +
-        "\\nPilihan lampiran gambar: Lampirkan pada email yang setelah ini dialihkan" +
-        "\\nBukti pembayaran: " + (proof ? proof.name : "Akan dilampirkan manual melalui email") +
-        "\\nPilihan bukti pembayaran: Lampirkan pada email yang setelah ini dialihkan";
+        "\\nLampiran gambar: " + (imageChoice ? imageChoice.value : "Tidak dipilih") +
+        "\\nBukti pembayaran: " + (proofChoice ? proofChoice.value : "Tidak dipilih");
       window.location.href = "mailto:hireamejob@gmail.com?subject=" +
         encodeURIComponent("Pengajuan Upload Lowongan - " + name) + "&body=" + encodeURIComponent(body);
       if (timer) { clearInterval(timer); timer = null; }
       localStorage.removeItem(deadlineKey);
+      localStorage.removeItem(draftKey);
     });
   })();
 
@@ -2387,11 +2423,21 @@ footer h6{ color:#fff; font-weight:700; }
 
     var now = Date.now();
 
-    if(!deadline || deadline <= now){
+    if(!deadline){
 
-      deadline = now + 30 * 60 * 1000; // 30 menit dari sekarang
+      deadline = now + 30 * 60 * 1000; // 30 menit dari pertama masuk ke pembayaran
 
       localStorage.setItem(PAYMENT_DEADLINE_KEY, String(deadline));
+
+    } else if(deadline <= now){
+
+      alert("Waktu pembayaran 30 menit sudah habis. Silakan isi ulang formulir booking.");
+      localStorage.removeItem(PAYMENT_DEADLINE_KEY);
+      bookingForm.reset();
+      bookingForm.classList.remove("was-validated");
+      fillPackages("");
+      showBookingStep1();
+      return;
 
     }
 
@@ -2413,7 +2459,7 @@ footer h6{ color:#fff; font-weight:700; }
 
     if(bookingSubmitBtn){ bookingSubmitBtn.style.display = "none"; }
 
-    if(bookingPaymentProofInput){ bookingPaymentProofInput.removeAttribute("required"); }
+    if(bookingPaymentProofInput){ bookingPaymentProofInput.removeAttribute("required"); bookingPaymentProofInput.checked = false; }
 
   }
 
@@ -2473,7 +2519,16 @@ footer h6{ color:#fff; font-weight:700; }
 
     bookingModalEl.addEventListener("shown.bs.modal", function(){
 
-      showBookingStep1();
+      var savedDeadline = parseInt(localStorage.getItem(PAYMENT_DEADLINE_KEY), 10);
+      if(savedDeadline && savedDeadline > Date.now()) showBookingStep2();
+      else if(savedDeadline && savedDeadline <= Date.now()) {
+        alert("Waktu pembayaran 30 menit sudah habis. Silakan isi ulang formulir booking.");
+        localStorage.removeItem(PAYMENT_DEADLINE_KEY);
+        bookingForm.reset();
+        bookingForm.classList.remove("was-validated");
+        fillPackages("");
+        showBookingStep1();
+      } else showBookingStep1();
 
     });
 
@@ -2561,6 +2616,17 @@ footer h6{ color:#fff; font-weight:700; }
 
   document.getElementById("bookingSubmit").addEventListener("click", function(){
 
+    var bookingDeadline = parseInt(localStorage.getItem(PAYMENT_DEADLINE_KEY), 10);
+    if(!bookingDeadline || bookingDeadline <= Date.now()){
+      alert("Waktu pembayaran 30 menit sudah habis. Silakan isi ulang formulir booking.");
+      localStorage.removeItem(PAYMENT_DEADLINE_KEY);
+      bookingForm.reset();
+      bookingForm.classList.remove("was-validated");
+      fillPackages("");
+      showBookingStep1();
+      return;
+    }
+
     if(!bookingForm.checkValidity()){
 
       bookingForm.classList.add("was-validated");
@@ -2583,13 +2649,9 @@ footer h6{ color:#fff; font-weight:700; }
 
     var time = fd.get("time");
 
-    var attachmentFile = fd.get("attachment");
+    var attachmentChoice = fd.get("attachmentOption") || "-";
 
-    var attachmentName = (attachmentFile && attachmentFile.name) ? attachmentFile.name : "-";
-
-    var paymentProofFile = fd.get("payment_proof");
-
-    var paymentProofName = (paymentProofFile && paymentProofFile.name) ? paymentProofFile.name : "-";
+    var paymentProofName = fd.get("paymentProofOption") || "-";
 
     var notes = fd.get("notes") || "-";
 
@@ -2609,7 +2671,7 @@ footer h6{ color:#fff; font-weight:700; }
 
       "Jam: " + time + "\n" +
 
-      "Lampiran: " + attachmentName + "\n" +
+      "Lampiran: " + attachmentChoice + "\n" +
 
       "Bukti Pembayaran: " + paymentProofName + "\n" +
 
@@ -2619,7 +2681,7 @@ footer h6{ color:#fff; font-weight:700; }
 
     window.open("https://wa.me/" + ADMIN_WA_NUMBER + "?text=" + encodeURIComponent(msg), "_blank");
 
-    alert('Jangan lupa lampirkan file "' + attachmentName + '" dan bukti pembayaran "' + paymentProofName + '" secara manual di chat WhatsApp, karena tautan WhatsApp tidak bisa mengirim file secara otomatis.');
+    alert('Lampirkan bukti pembayaran secara manual setelah chat WhatsApp terbuka.');
 
     if(paymentTimerInterval){ clearInterval(paymentTimerInterval); paymentTimerInterval = null; }
 
