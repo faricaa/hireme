@@ -101,25 +101,6 @@ a{ text-decoration:none; }
   background:rgba(0,102,255,.1); color:var(--electric-blue); font-size:1.5rem; margin:0 auto 1rem;
 }
 
-/* ---------- Service cards w/ HRD carousel ---------- */
-.service-card{
-  border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); height:100%;
-  border:1px solid #EEF3FB; background:#fff;
-}
-.hrd-photo-wrap{ position:relative; height:230px; overflow:hidden; background:var(--sky-blue); }
-.hrd-photo{
-  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-  opacity:0; transition:opacity 1s ease-in-out;
-}
-.hrd-photo.active{ opacity:1; }
-.hrd-caption{
-  position:absolute; left:0; right:0; bottom:0; padding:.9rem 1rem;
-  background:linear-gradient(0deg, rgba(11,77,162,.85), transparent);
-  color:#fff; font-size:.85rem;
-}
-.service-body{ padding:1.5rem; }
-.service-body .price-tag{ color:var(--accent-orange); font-weight:700; }
-
 /* ---------- Testimonials ---------- */
 .testi-track-wrap{ overflow:hidden; padding:1rem 0 2rem; }
 .testi-track{ display:flex; gap:1.25rem; transition:transform .5s ease; }
@@ -156,7 +137,6 @@ a{ text-decoration:none; }
 }
 .job-card:hover{ box-shadow:var(--shadow-sm); transform:translateY(-4px); border-color:transparent; }
 
-/* ===== POSTER JOB CARD (BARU) ===== */
 .job-poster{
   display:block; width:100%; aspect-ratio:4/5; object-fit:cover;
   border-radius:10px; margin-bottom:1rem; background:#EAF1FB;
@@ -211,7 +191,6 @@ footer h6{ color:#fff; font-weight:700; }
 /* ---------- Modal ---------- */
 .modal-content{ border-radius:16px; border:none; }
 .modal-header{ border-bottom:1px solid #EEF3FB; }
-.package-badge{ font-size:.8rem; background:rgba(33,150,243,.1); color:var(--accent-orange); padding:.3rem .7rem; border-radius:8px; display:inline-block; margin-top:.3rem; }
 
 /* Page switching */
 .page-section{ display:none; }
@@ -249,7 +228,7 @@ body.is-admin-mode .nav-item-user {
 </nav>
 
 <!-- ============ HOME PAGE ============ -->
-<main id="page-home" class="page-section active-page">
+<main id="page-home" class="page-section">
 
   <!-- Hero -->
   <section class="hero">
@@ -727,8 +706,9 @@ body.is-admin-mode .nav-item-user {
   /* ================= PAGE NAVIGATION ================= */
   var pages = document.querySelectorAll(".page-section");
   var navLinks = document.querySelectorAll("[data-page]");
+  var LAST_PAGE_KEY = "hireme_last_page";
 
-  function goToPage(pageKey){
+  function goToPage(pageKey, saveState){
     pages.forEach(function(p){ p.classList.toggle("active-page", p.id === "page-" + pageKey); });
     document.querySelectorAll(".nav-link[data-page]").forEach(function(l){
       l.classList.toggle("active", l.getAttribute("data-page") === pageKey);
@@ -737,6 +717,9 @@ body.is-admin-mode .nav-item-user {
     var collapse = document.getElementById("navMain");
     if(collapse.classList.contains("show")){
       bootstrap.Collapse.getOrCreateInstance(collapse).hide();
+    }
+    if(saveState !== false) {
+      localStorage.setItem(LAST_PAGE_KEY, pageKey);
     }
   }
 
@@ -1315,6 +1298,14 @@ body.is-admin-mode .nav-item-user {
     }, 4000);
   });
 
+  // Inisialisasi tampilan awal: Selalu mulai dari home page, lalu muat state halaman terakhir jika ada refresh
+  goToPage("home", false);
+  var savedPage = localStorage.getItem(LAST_PAGE_KEY);
+  if(savedPage) {
+    // Jika user admin dan halaman terakhirnya adalah profile/admin, atau halaman user biasa, restore
+    goToPage(savedPage, false);
+  }
+
 })();
 </script>
 
@@ -1468,6 +1459,7 @@ var renderProfile;
   /* ===== LOGOUT ===== */
   function logout(){
     localStorage.removeItem(K.session);
+    localStorage.removeItem("hireme_last_page");
     document.body.classList.remove("is-admin-mode");
     renderNav();
     var home = document.querySelector('.nav-link[data-page="home"]');
@@ -1486,6 +1478,7 @@ var renderProfile;
     window.scrollTo(0, 0);
     var collapse = $("navMain");
     if(collapse.classList.contains("show")) bootstrap.Collapse.getOrCreateInstance(collapse).hide();
+    localStorage.setItem("hireme_last_page", "profile");
     renderProfile();
   }
 
@@ -1649,10 +1642,6 @@ var renderProfile;
   });
 
   renderNav();
-  var initialUser = currentUser();
-  if(initialUser && initialUser.admin){
-    showProfile();
-  }
 })();
 </script>
 <!-- ============ [AKHIR TAMBAHAN] ============ -->
