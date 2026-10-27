@@ -217,10 +217,11 @@ footer h6{ color:#fff; font-weight:700; }
 .page-section{ display:none; }
 .page-section.active-page{ display:block; }
 
-@media (max-width:767px){
-  .contact-info-col, .contact-form-col{ padding:2rem 1.25rem; }
-  .hero{ text-align:center; padding:3.5rem 0 4rem;}
-  .hero .lead{ margin-left:auto; margin-right:auto; }
+/* Dynamic Admin Mode CSS Rules */
+body.is-admin-mode main:not(#page-profile),
+body.is-admin-mode footer,
+body.is-admin-mode .nav-item-user {
+  display: none !important;
 }
 </style>
 </head>
@@ -237,11 +238,11 @@ footer h6{ color:#fff; font-weight:700; }
     </button>
     <div class="collapse navbar-collapse" id="navMain">
       <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
-        <li class="nav-item"><a class="nav-link active" href="#" data-page="home">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="#" data-page="jobs">Info Lowongan</a></li>
-        <li class="nav-item"><a class="nav-link" href="#" data-page="about">About Us</a></li>
-        <li class="nav-item"><a class="nav-link" href="#" data-page="news">News</a></li>
-        <li class="nav-item"><a class="nav-link" href="#" data-page="contact">Contact Us</a></li>
+        <li class="nav-item nav-item-user"><a class="nav-link active" href="#" data-page="home">Home</a></li>
+        <li class="nav-item nav-item-user"><a class="nav-link" href="#" data-page="jobs">Info Lowongan</a></li>
+        <li class="nav-item nav-item-user"><a class="nav-link" href="#" data-page="about">About Us</a></li>
+        <li class="nav-item nav-item-user"><a class="nav-link" href="#" data-page="news">News</a></li>
+        <li class="nav-item nav-item-user"><a class="nav-link" href="#" data-page="contact">Contact Us</a></li>
       </ul>
     </div>
   </div>
@@ -676,7 +677,7 @@ footer h6{ color:#fff; font-weight:700; }
     <div class="container">
       <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
         <div>
-          <div class="eyebrow">Profil</div>
+          <div class="eyebrow" id="profileEyebrow">Profil</div>
           <h2 class="section-title mb-1" id="profileName"></h2>
           <p class="mb-0" id="profileEmail"></p>
         </div>
@@ -684,8 +685,25 @@ footer h6{ color:#fff; font-weight:700; }
       </div>
 
       <div id="adminPanel" class="mb-5" style="display:none">
-        <h5 class="mb-3">Panel Admin: Verifikasi Pembayaran</h5>
-        <div id="adminList"></div>
+        <h5 class="mb-3">Panel Admin: Record Data Upload Lowongan User</h5>
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered align-middle bg-white shadow-sm rounded">
+            <thead class="table-dark">
+              <tr>
+                <th scope="col" class="text-center" style="width: 50px;">No</th>
+                <th scope="col" style="width: 150px;">Waktu &amp; Tanggal</th>
+                <th scope="col" style="width: 180px;">Pengirim</th>
+                <th scope="col">Detail Lowongan</th>
+                <th scope="col" style="width: 170px;">Lampiran</th>
+                <th scope="col" class="text-center" style="width: 100px;">Status</th>
+                <th scope="col" class="text-center" style="width: 160px;">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="adminTableBody">
+              <!-- Content injected by JS -->
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div id="historyWrap">
@@ -1110,7 +1128,6 @@ footer h6{ color:#fff; font-weight:700; }
 
       if (!form.checkValidity() || !proofValid) {
         form.classList.add("was-validated");
-        // Jika ada field di langkah 1 yang belum valid (mis. gambar hilang setelah refresh), tampilkan langkah 1
         if (step1.style.display === "none" && !document.getElementById("uploadJobImageFile").checkValidity()) { showStep1(); }
         else if (step1.style.display === "none" && !draftFields.every(function(id){ return document.getElementById(id).checkValidity(); })) { showStep1(); }
         form.reportValidity();
@@ -1135,7 +1152,6 @@ footer h6{ color:#fff; font-weight:700; }
       var imageFile = document.getElementById("uploadJobImageFile").files[0];
       var proofFile = proofFileEl.files[0];
 
-      // Kompres gambar agar muat di localStorage (batas ~5MB)
       function readCompressed(file, maxSide, cb){
         var fr = new FileReader();
         fr.onerror = function(){ cb(null); };
@@ -1160,7 +1176,6 @@ footer h6{ color:#fff; font-weight:700; }
         fr.readAsDataURL(file);
       }
 
-      // Membaca file dan menyimpannya beserta seluruh data ke localStorage untuk panel admin
       var readerImg = new FileReader();
       readerImg.onload = function(uploadEvt1){
         var imageDataUrl = uploadEvt1.target.result;
@@ -1169,7 +1184,6 @@ footer h6{ color:#fff; font-weight:700; }
         readerProof.onload = function(uploadEvt2){
           var proofDataUrl = uploadEvt2.target.result;
 
-          // Menggunakan helper currentUser yang sudah ada di bawah untuk mengambil email/nama user yang sedang login
           var sessionEmail = JSON.parse(localStorage.getItem("hireme_session") || "null");
           var userEmail = sessionEmail ? sessionEmail : "guest@hireme.com";
           var userName = name;
@@ -1312,7 +1326,7 @@ var renderProfile;
 
   /* ===== KONFIGURASI ===== */
   var ADMIN_EMAIL = "hireamejob@gmail.com";
-  var ADMIN_PASS  = "Admin12345"; // GANTI password admin ini
+  var ADMIN_PASS  = "Admin12345";
   var K = {users:"hireme_users", session:"hireme_session", history:"hireme_history", pending:"hireme_pending"};
 
   /* ===== HELPER ===== */
@@ -1344,8 +1358,17 @@ var renderProfile;
   function renderNav(){
     var u = currentUser();
     if(!u){
+      document.body.classList.remove("is-admin-mode");
       authItem.innerHTML = '<button type="button" class="btn btn-orange btn-sm" id="navLoginBtn"><i class="bi bi-box-arrow-in-right me-1"></i> Login</button>';
+    } else if(u.admin){
+      document.body.classList.add("is-admin-mode");
+      authItem.innerHTML =
+        '<div class="d-flex align-items-center gap-2">' +
+          '<span class="badge bg-warning text-dark"><i class="bi bi-shield-lock-fill me-1"></i> Mode Admin</span>' +
+          '<button type="button" class="btn btn-outline-danger btn-sm" id="navLogoutBtn"><i class="bi bi-box-arrow-right me-1"></i> Logout</button>' +
+        '</div>';
     } else {
+      document.body.classList.remove("is-admin-mode");
       authItem.innerHTML =
         '<div class="dropdown">' +
           '<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-circle me-1"></i>' + esc(u.name.split(" ")[0]) + '</a>' +
@@ -1418,6 +1441,7 @@ var renderProfile;
     save(K.session, p.email);
     authModal.hide();
     renderNav();
+    showProfile();
   });
 
   /* ===== LOGIN ===== */
@@ -1438,21 +1462,24 @@ var renderProfile;
     $("authLoginForm").reset();
     authModal.hide();
     renderNav();
+    showProfile();
   });
 
   /* ===== LOGOUT ===== */
   function logout(){
     localStorage.removeItem(K.session);
+    document.body.classList.remove("is-admin-mode");
     renderNav();
     var home = document.querySelector('.nav-link[data-page="home"]');
-    if($("page-profile").classList.contains("active-page") && home) home.click();
+    if(home) home.click();
   }
   $("profileLogoutBtn").addEventListener("click", logout);
 
-  /* ===== HALAMAN PROFIL ===== */
+  /* ===== HALAMAN PROFIL / ADMIN ===== */
   function showProfile(){
     var u = currentUser();
     if(!u){ openAuth("login"); return; }
+    
     document.querySelectorAll(".page-section").forEach(function(p){ p.classList.remove("active-page"); });
     $("page-profile").classList.add("active-page");
     document.querySelectorAll(".nav-link[data-page]").forEach(function(l){ l.classList.remove("active"); });
@@ -1462,12 +1489,6 @@ var renderProfile;
     renderProfile();
   }
 
-  function statusBadge(s){
-    var cls = s === "Disetujui" ? "bg-success" : (s === "Ditolak" ? "bg-danger" : "bg-warning text-dark");
-    return '<span class="badge ' + cls + '">' + esc(s) + '</span>';
-  }
-
-  /* Nama file unduhan: ekstensi disesuaikan dengan tipe data yang tersimpan */
   function fileNameFor(name, dataUrl){
     var m = /^data:image\/([a-z0-9.+-]+)/i.exec(dataUrl || "");
     var ext = m ? m[1].toLowerCase().replace("jpeg", "jpg").replace("svg+xml", "svg") : "jpg";
@@ -1475,7 +1496,6 @@ var renderProfile;
     return base + "." + ext;
   }
 
-  /* Tombol "Lihat": browser memblokir buka data: URL di tab baru, jadi diubah ke Blob URL dulu */
   document.addEventListener("click", function(e){
     var a = e.target.closest ? e.target.closest("a[data-view-file]") : null;
     if(!a) return;
@@ -1496,12 +1516,17 @@ var renderProfile;
     }
   });
 
-  function historyCard(h, adminMode){
+  function statusBadge(s){
+    var cls = s === "Disetujui" ? "bg-success" : (s === "Ditolak" ? "bg-danger" : "bg-warning text-dark");
+    return '<span class="badge ' + cls + '">' + esc(s || "Menunggu") + '</span>';
+  }
+
+  function historyCard(h){
     var html = '<div class="history-card">' +
       '<div class="d-flex justify-content-between align-items-start gap-2 mb-1">' +
         '<h6 class="mb-0">' + esc(h.title) + '</h6>' + statusBadge(h.status) +
       '</div>' +
-      '<p class="small muted mb-1">' + fmtDate(h.date) + (adminMode ? ' &middot; ' + esc(h.name) + ' (' + esc(h.email) + ')' : '') + '</p>' +
+      '<p class="small muted mb-1">' + fmtDate(h.date) + '</p>' +
       '<p class="small mb-1"><strong>Deskripsi:</strong> ' + esc(h.description) + '</p>' +
       '<p class="small mb-1"><i class="bi bi-link-45deg"></i> Link CV: <a href="' + esc(h.link) + '" target="_blank">' + esc(h.link) + '</a></p>' +
       '<p class="small mb-1">No. HP: ' + esc(h.phone) + '</p>';
@@ -1516,12 +1541,7 @@ var renderProfile;
     if(h.status === "Ditolak" && h.reason){
       html += '<div class="alert alert-danger py-2 small mt-2 mb-0"><strong>Alasan penolakan:</strong> ' + esc(h.reason) + '</div>';
     }
-    if(adminMode && h.status === "Menunggu"){
-      html += '<div class="d-flex gap-2 mt-3">' +
-        '<button class="btn btn-sm btn-orange" data-approve="' + h.id + '">Setujui</button>' +
-        '<button class="btn btn-sm btn-outline-electric" data-reject="' + h.id + '">Tolak</button>' +
-      '</div>';
-    }
+
     return html + '</div>';
   }
 
@@ -1530,44 +1550,109 @@ var renderProfile;
     if(!u) return;
     $("profileName").textContent = u.name;
     $("profileEmail").textContent = u.email + (u.admin ? " (Admin)" : "");
-    var all = load(K.history, []).sort(function(a,b){ return b.date - a.date; });
+    $("profileEyebrow").textContent = u.admin ? "Panel Admin" : "Profil";
+
+    // Sort kronologis terlama ke terbaru untuk urutan record tak terbatas
+    var all = load(K.history, []).sort(function(a,b){ return a.date - b.date; });
 
     $("adminPanel").style.display = u.admin ? "" : "none";
     $("historyWrap").style.display = u.admin ? "none" : "";
 
     if(u.admin){
-      $("adminList").innerHTML = all.length ? all.map(function(h){ return historyCard(h, true); }).join("") :
-        '<p class="muted">Belum ada pengajuan lowongan.</p>';
+      var tbody = $("adminTableBody");
+      tbody.innerHTML = "";
+      if(all.length === 0){
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted py-4">Belum ada record data upload lowongan.</td></tr>';
+      } else {
+        all.forEach(function(h, idx){
+          var tr = document.createElement("tr");
+          
+          var filesHtml = '';
+          if(h.imageName && h.imageData){
+            filesHtml += '<div class="mb-2"><span class="badge bg-secondary mb-1">Gambar Lowongan</span><br>' +
+              '<a href="' + h.imageData + '" data-view-file="1" class="btn btn-xs btn-outline-primary btn-sm me-1 py-0 px-1 fs-7">Lihat</a>' +
+              '<a href="' + h.imageData + '" download="' + esc(fileNameFor(h.imageName, h.imageData)) + '" class="btn btn-xs btn-outline-success btn-sm py-0 px-1 fs-7">Unduh</a></div>';
+          }
+          if(h.proofName && h.proofData){
+            filesHtml += '<div><span class="badge bg-secondary mb-1">Bukti Bayar</span><br>' +
+              '<a href="' + h.proofData + '" data-view-file="1" class="btn btn-xs btn-outline-primary btn-sm me-1 py-0 px-1 fs-7">Lihat</a>' +
+              '<a href="' + h.proofData + '" download="' + esc(fileNameFor(h.proofName, h.proofData)) + '" class="btn btn-xs btn-outline-success btn-sm py-0 px-1 fs-7">Unduh</a></div>';
+          }
+
+          var statusCol = statusBadge(h.status);
+          if(h.status === "Ditolak" && h.reason){
+            statusCol += '<br><small class="text-danger">Ket: ' + esc(h.reason) + '</small>';
+          }
+
+          var actionsHtml = 
+            '<div class="d-flex flex-column gap-1">' +
+              '<button class="btn btn-sm btn-success py-1 px-2" data-approve="' + h.id + '"><i class="bi bi-check-circle"></i> Setujui</button>' +
+              '<button class="btn btn-sm btn-warning text-dark py-1 px-2" data-reject="' + h.id + '"><i class="bi bi-x-circle"></i> Tidak Setuju</button>' +
+              '<button class="btn btn-sm btn-outline-danger py-1 px-2 mt-1" data-delete-id="' + h.id + '"><i class="bi bi-trash"></i> Hapus</button>' +
+            '</div>';
+
+          tr.innerHTML = 
+            '<td class="text-center fw-bold">' + (idx + 1) + '</td>' +
+            '<td class="small">' + fmtDate(h.date) + '</td>' +
+            '<td class="small"><strong>' + esc(h.name) + '</strong><br><span class="text-muted">' + esc(h.email) + '</span><br><span class="text-muted">HP: ' + esc(h.phone) + '</span></td>' +
+            '<td class="small"><strong>Deskripsi:</strong> ' + esc(h.description) + '<br><i class="bi bi-link-45deg"></i> <a href="' + esc(h.link) + '" target="_blank">Link Form CV</a></td>' +
+            '<td>' + filesHtml + '</td>' +
+            '<td class="text-center">' + statusCol + '</td>' +
+            '<td class="text-center">' + actionsHtml + '</td>';
+            
+          tbody.appendChild(tr);
+        });
+      }
     } else {
-      var mine = all.filter(function(h){ return h.email === u.email; });
-      $("historyList").innerHTML = mine.length ? mine.map(function(h){ return historyCard(h, false); }).join("") :
+      var mine = all.filter(function(h){ return h.email === u.email; }).reverse();
+      $("historyList").innerHTML = mine.length ? mine.map(function(h){ return historyCard(h); }).join("") :
         '<div class="text-center muted py-4"><i class="bi bi-clock-history fs-1 d-block mb-2"></i>Belum ada riwayat upload lowongan.</div>';
     }
   };
 
-  $("adminList").addEventListener("click", function(e){
+  $("adminTableBody").addEventListener("click", function(e){
     var u = currentUser();
     if(!u || !u.admin) return;
-    var a = e.target.closest("[data-approve]");
-    var r = e.target.closest("[data-reject]");
-    if(!a && !r) return;
-    var id = Number((a || r).getAttribute(a ? "data-approve" : "data-reject"));
+
+    var appBtn = e.target.closest("[data-approve]");
+    var rejBtn = e.target.closest("[data-reject]");
+    var delBtn = e.target.closest("[data-delete-id]");
+
+    if(!appBtn && !rejBtn && !delBtn) return;
+
     var list = load(K.history, []);
+    var id = Number((appBtn || rejBtn || delBtn).getAttribute(appBtn ? "data-approve" : (rejBtn ? "data-reject" : "data-delete-id")));
     var item = list.filter(function(h){ return h.id === id; })[0];
-    if(!item) return;
-    if(a){
-      item.status = "Disetujui"; item.reason = "";
-    } else {
-      var reason = prompt("Tulis alasan penolakan:");
+
+    if(appBtn && item){
+      item.status = "Disetujui";
+      item.reason = "";
+      save(K.history, list);
+      renderProfile();
+      alert("Status lowongan disetujui!");
+    } else if(rejBtn && item){
+      var reason = prompt("Tulis alasan / keterangan penolakan lowongan ini:");
       if(reason === null) return;
-      if(!reason.trim()){ alert("Alasan penolakan wajib diisi."); return; }
-      item.status = "Ditolak"; item.reason = reason.trim();
+      if(!reason.trim()){ alert("Keterangan penolakan wajib diisi."); return; }
+      item.status = "Ditolak";
+      item.reason = reason.trim();
+      save(K.history, list);
+      renderProfile();
+      alert("Status lowongan ditolak dengan keterangan tersimpan.");
+    } else if(delBtn){
+      if(confirm("Apakah Anda yakin ingin menghapus data upload ini? Data akan terhapus juga dari riwayat user.")){
+        list = list.filter(function(h){ return h.id !== id; });
+        save(K.history, list);
+        renderProfile();
+      }
     }
-    save(K.history, list);
-    renderProfile();
   });
 
   renderNav();
+  var initialUser = currentUser();
+  if(initialUser && initialUser.admin){
+    showProfile();
+  }
 })();
 </script>
 <!-- ============ [AKHIR TAMBAHAN] ============ -->
