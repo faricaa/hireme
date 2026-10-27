@@ -101,6 +101,25 @@ a{ text-decoration:none; }
   background:rgba(0,102,255,.1); color:var(--electric-blue); font-size:1.5rem; margin:0 auto 1rem;
 }
 
+/* ---------- Service cards w/ HRD carousel ---------- */
+.service-card{
+  border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); height:100%;
+  border:1px solid #EEF3FB; background:#fff;
+}
+.hrd-photo-wrap{ position:relative; height:230px; overflow:hidden; background:var(--sky-blue); }
+.hrd-photo{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  opacity:0; transition:opacity 1s ease-in-out;
+}
+.hrd-photo.active{ opacity:1; }
+.hrd-caption{
+  position:absolute; left:0; right:0; bottom:0; padding:.9rem 1rem;
+  background:linear-gradient(0deg, rgba(11,77,162,.85), transparent);
+  color:#fff; font-size:.85rem;
+}
+.service-body{ padding:1.5rem; }
+.service-body .price-tag{ color:var(--accent-orange); font-weight:700; }
+
 /* ---------- Testimonials ---------- */
 .testi-track-wrap{ overflow:hidden; padding:1rem 0 2rem; }
 .testi-track{ display:flex; gap:1.25rem; transition:transform .5s ease; }
@@ -137,6 +156,7 @@ a{ text-decoration:none; }
 }
 .job-card:hover{ box-shadow:var(--shadow-sm); transform:translateY(-4px); border-color:transparent; }
 
+/* ===== POSTER JOB CARD (BARU) ===== */
 .job-poster{
   display:block; width:100%; aspect-ratio:4/5; object-fit:cover;
   border-radius:10px; margin-bottom:1rem; background:#EAF1FB;
@@ -191,16 +211,16 @@ footer h6{ color:#fff; font-weight:700; }
 /* ---------- Modal ---------- */
 .modal-content{ border-radius:16px; border:none; }
 .modal-header{ border-bottom:1px solid #EEF3FB; }
+.package-badge{ font-size:.8rem; background:rgba(33,150,243,.1); color:var(--accent-orange); padding:.3rem .7rem; border-radius:8px; display:inline-block; margin-top:.3rem; }
 
 /* Page switching */
 .page-section{ display:none; }
 .page-section.active-page{ display:block; }
 
-/* Dynamic Admin Mode CSS Rules */
-body.is-admin-mode main:not(#page-profile),
-body.is-admin-mode footer,
-body.is-admin-mode .nav-item-user {
-  display: none !important;
+@media (max-width:767px){
+  .contact-info-col, .contact-form-col{ padding:2rem 1.25rem; }
+  .hero{ text-align:center; padding:3.5rem 0 4rem;}
+  .hero .lead{ margin-left:auto; margin-right:auto; }
 }
 </style>
 </head>
@@ -217,18 +237,18 @@ body.is-admin-mode .nav-item-user {
     </button>
     <div class="collapse navbar-collapse" id="navMain">
       <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
-        <li class="nav-item nav-item-user"><a class="nav-link active" href="#" data-page="home">Home</a></li>
-        <li class="nav-item nav-item-user"><a class="nav-link" href="#" data-page="jobs">Info Lowongan</a></li>
-        <li class="nav-item nav-item-user"><a class="nav-link" href="#" data-page="about">About Us</a></li>
-        <li class="nav-item nav-item-user"><a class="nav-link" href="#" data-page="news">News</a></li>
-        <li class="nav-item nav-item-user"><a class="nav-link" href="#" data-page="contact">Contact Us</a></li>
+        <li class="nav-item"><a class="nav-link active" href="#" data-page="home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" data-page="jobs">Info Lowongan</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" data-page="about">About Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" data-page="news">News</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" data-page="contact">Contact Us</a></li>
       </ul>
     </div>
   </div>
 </nav>
 
 <!-- ============ HOME PAGE ============ -->
-<main id="page-home" class="page-section">
+<main id="page-home" class="page-section active-page">
 
   <!-- Hero -->
   <section class="hero">
@@ -545,9 +565,8 @@ body.is-admin-mode .nav-item-user {
             <div class="mb-3"><label class="form-label" for="uploadJobPhone">No. HP</label><input class="form-control" id="uploadJobPhone" name="phone" type="tel" inputmode="numeric" minlength="12" maxlength="16" required><div class="invalid-feedback">Nomor HP harus terdiri dari minimal 12 angka.</div></div>
             <div class="mb-3"><label class="form-label" for="uploadJobDescription">Deskripsi singkat jobs</label><textarea class="form-control" id="uploadJobDescription" name="description" rows="4" required></textarea><div class="invalid-feedback">Deskripsi lowongan wajib diisi.</div></div>
             <div class="mb-3">
-              <label class="form-label" for="uploadJobImageFile">Lampiran gambar lowongan</label>
-              <input class="form-control" type="file" id="uploadJobImageFile" accept="image/*" required>
-              <div class="invalid-feedback">Lampiran gambar lowongan wajib diunggah.</div>
+              <label class="form-label">Lampiran gambar lowongan</label>
+              <div class="form-check"><input class="form-check-input" type="radio" name="imageEmailOption" id="uploadImageEmail" value="Lampirkan pada email yang setelah ini dialihkan" required><label class="form-check-label text-danger fw-bold" for="uploadImageEmail">Lampirkan pada email yang setelah ini dialihkan</label></div>
             </div>
             <div class="mb-3"><label class="form-label" for="uploadJobLink">Link form pengumpulan CV (wajib menggunakan https://)</label><input class="form-control" id="uploadJobLink" name="cvLink" type="url" placeholder="https://..." pattern="https://.+" required><div class="invalid-feedback">Masukkan link HTTPS, misalnya Google Form atau WhatsApp.</div></div>
             <button type="button" class="btn btn-orange w-100" id="uploadJobNext">Next</button>
@@ -560,16 +579,15 @@ body.is-admin-mode .nav-item-user {
               <div class="fw-bold text-royal">Batas waktu pembayaran: <span id="uploadPaymentCountdown">30:00</span></div>
             </div>
             <div class="mb-3">
-              <label class="form-label" for="uploadJobProofFile">Lampiran bukti pembayaran</label>
-              <input class="form-control" type="file" id="uploadJobProofFile" accept="image/*" required>
-              <div class="invalid-feedback">Lampiran bukti pembayaran wajib diunggah.</div>
-              <div class="form-text">Lampirkan bukti pembayaran secara manual.</div>
+              <label class="form-label">Lampiran bukti pembayaran</label>
+              <div class="form-check mt-2"><input class="form-check-input" type="radio" name="proofEmailOption" id="uploadProofEmail" value="Lampirkan kembali setelah ini dialihkan" required><label class="form-check-label text-danger fw-bold" for="uploadProofEmail">Lampirkan kembali setelah ini dialihkan</label></div>
+              <div class="form-text">Lampirkan bukti pembayaran secara manual setelah email terbuka.</div>
             </div>
             <button type="button" class="btn btn-outline-electric w-100 mb-2" id="uploadJobBack">Kembali</button>
-            <button type="submit" class="btn btn-orange w-100" id="uploadJobSubmit">Kirim</button>
+            <button type="submit" class="btn btn-orange w-100" id="uploadJobSubmit">Kirim melalui Email</button>
           </div>
         </form>
-        <div class="small text-muted mt-3">Catatan: data dan file disimpan ke LocalStorage dan langsung masuk ke Panel Admin.</div>
+        <div class="small text-muted mt-3">Catatan: formulir ini menyiapkan email melalui aplikasi email pengguna; data dan file tidak diunggah otomatis ke server HireMe.</div>
       </div>
     </div>
   </div>
@@ -593,107 +611,6 @@ body.is-admin-mode .nav-item-user {
   </div>
 </div>
 
-<!-- ============ [TAMBAHAN] LOGIN / PROFIL / RIWAYAT ============ -->
-<style>
-  .auth-link{ color:var(--electric-blue); cursor:pointer; font-weight:600; }
-  .auth-link:hover{ text-decoration:underline; }
-  .history-card{ border:1px solid #EEF3FB; border-radius:var(--radius); padding:1.2rem; background:#fff; margin-bottom:1rem; box-shadow:var(--shadow-sm); }
-  .demo-code{ background:#F4F9FF; border:2px dashed var(--sky-blue); border-radius:10px; padding:.75rem; text-align:center; }
-  .demo-code strong{ font-size:1.5rem; letter-spacing:.3em; color:var(--royal-blue); }
-</style>
-
-<!-- Modal Login / Daftar / Verifikasi -->
-<div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="authTitle">Login</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-      </div>
-      <div class="modal-body">
-
-        <!-- LOGIN -->
-        <form id="authLoginForm" novalidate>
-          <div class="mb-3"><label class="form-label" for="loginEmail">Email</label><input type="email" class="form-control" id="loginEmail" autocomplete="username"></div>
-          <div class="mb-3"><label class="form-label" for="loginPass">Password</label><input type="password" class="form-control" id="loginPass" autocomplete="current-password"></div>
-          <div class="alert alert-danger py-2 small d-none" id="loginError"></div>
-          <button type="submit" class="btn btn-orange w-100">Login</button>
-          <p class="small text-center mt-3 mb-0">Belum punya akun? <span class="auth-link" id="goRegister">Daftar</span></p>
-        </form>
-
-        <!-- DAFTAR -->
-        <form id="authRegisterForm" novalidate style="display:none">
-          <div class="mb-3"><label class="form-label" for="regName">Nama Lengkap</label><input type="text" class="form-control" id="regName"></div>
-          <div class="mb-3"><label class="form-label" for="regEmail">Email</label><input type="email" class="form-control" id="regEmail" autocomplete="username"></div>
-          <div class="mb-3"><label class="form-label" for="regPass">Password</label><input type="password" class="form-control" id="regPass" autocomplete="new-password"><div class="form-text">Minimal 8 karakter, kombinasi huruf dan angka.</div></div>
-          <div class="mb-3"><label class="form-label" for="regPass2">Konfirmasi Password</label><input type="password" class="form-control" id="regPass2" autocomplete="new-password"></div>
-          <div class="alert alert-danger py-2 small d-none" id="regError"></div>
-          <button type="submit" class="btn btn-orange w-100">Daftar &amp; Kirim Kode Verifikasi</button>
-          <p class="small text-center mt-3 mb-0">Sudah punya akun? <span class="auth-link" id="goLogin">Login</span></p>
-        </form>
-
-        <!-- VERIFIKASI EMAIL -->
-        <form id="authVerifyForm" novalidate style="display:none">
-          <p class="small">Kode verifikasi dikirim ke <strong id="verifyEmailText"></strong>. Masukkan 6 digit kode di bawah.</p>
-          <div class="demo-code mb-3">
-            <div class="small muted">Mode demo (belum ada server email), kode kamu:</div>
-            <strong id="verifyDemoCode">------</strong>
-          </div>
-          <div class="mb-3"><label class="form-label" for="verifyCode">Kode Verifikasi</label><input type="text" class="form-control" id="verifyCode" inputmode="numeric" maxlength="6"></div>
-          <div class="alert alert-danger py-2 small d-none" id="verifyError"></div>
-          <button type="submit" class="btn btn-orange w-100">Verifikasi</button>
-          <p class="small text-center mt-3 mb-0"><span class="auth-link" id="verifyBack">Kembali ke pendaftaran</span></p>
-        </form>
-
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Halaman Profil & Riwayat -->
-<main id="page-profile" class="page-section">
-  <section class="section" style="padding-top:3rem;">
-    <div class="container">
-      <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
-        <div>
-          <div class="eyebrow" id="profileEyebrow">Profil</div>
-          <h2 class="section-title mb-1" id="profileName"></h2>
-          <p class="mb-0" id="profileEmail"></p>
-        </div>
-        <button type="button" class="btn btn-outline-electric" id="profileLogoutBtn"><i class="bi bi-box-arrow-right me-1"></i> Logout</button>
-      </div>
-
-      <div id="adminPanel" class="mb-5" style="display:none">
-        <h5 class="mb-3">Panel Admin: Record Data Upload Lowongan User</h5>
-        <div class="table-responsive">
-          <table class="table table-hover table-bordered align-middle bg-white shadow-sm rounded">
-            <thead class="table-dark">
-              <tr>
-                <th scope="col" class="text-center" style="width: 50px;">No</th>
-                <th scope="col" style="width: 150px;">Waktu &amp; Tanggal</th>
-                <th scope="col" style="width: 180px;">Pengirim</th>
-                <th scope="col">Detail Lowongan</th>
-                <th scope="col" style="width: 170px;">Lampiran</th>
-                <th scope="col" class="text-center" style="width: 100px;">Status</th>
-                <th scope="col" class="text-center" style="width: 160px;">Aksi</th>
-              </tr>
-            </thead>
-            <tbody id="adminTableBody">
-              <!-- Content injected by JS -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div id="historyWrap">
-        <h5 class="mb-3">Riwayat Upload Lowongan</h5>
-        <div id="historyList"></div>
-      </div>
-    </div>
-  </section>
-</main>
-<!-- ============ [AKHIR TAMBAHAN] ============ -->
-
 <!-- Bootstrap 5 JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -706,9 +623,8 @@ body.is-admin-mode .nav-item-user {
   /* ================= PAGE NAVIGATION ================= */
   var pages = document.querySelectorAll(".page-section");
   var navLinks = document.querySelectorAll("[data-page]");
-  var LAST_PAGE_KEY = "hireme_last_page";
 
-  function goToPage(pageKey, saveState){
+  function goToPage(pageKey){
     pages.forEach(function(p){ p.classList.toggle("active-page", p.id === "page-" + pageKey); });
     document.querySelectorAll(".nav-link[data-page]").forEach(function(l){
       l.classList.toggle("active", l.getAttribute("data-page") === pageKey);
@@ -717,9 +633,6 @@ body.is-admin-mode .nav-item-user {
     var collapse = document.getElementById("navMain");
     if(collapse.classList.contains("show")){
       bootstrap.Collapse.getOrCreateInstance(collapse).hide();
-    }
-    if(saveState !== false) {
-      localStorage.setItem(LAST_PAGE_KEY, pageKey);
     }
   }
 
@@ -782,6 +695,9 @@ body.is-admin-mode .nav-item-user {
   renderTestimonials();
 
   /* ================= JOB LISTINGS ================= */
+  /* Field "poster" = lokasi file gambar poster tiap lowongan.
+     Simpan gambar poster di folder gambar/ lalu ganti nama file sesuai milikmu.
+     Kalau file tidak ditemukan, otomatis tampil gambar placeholder. */
   var jobs = [
     {
       title: "Staff Toko",
@@ -790,7 +706,7 @@ body.is-admin-mode .nav-item-user {
       type: "fulltime",
       posted: "1 hari lalu",
       poster: "gambar/danik palstik.png",
-      applyLink: "https://wa.me/6281259215960",
+      applyLink: "https://wa.me/6281259215960", // GANTI dengan link perusahaan
       desc: "Menjaga operasional toko dan melayani transaksi pembeli selama jam kerja.",
       qualifications: ["Jujur & Bertanggung Jawab", "Pria / Wanita", "Cekatan", "Sehat Jasmani"]
     },
@@ -800,10 +716,13 @@ body.is-admin-mode .nav-item-user {
       location: "Surakarta",
       type: "parttime",
       posted: "1 hari lalu",
-      poster: "gambar/PT SEKUTU.png",
-      applyLink: "https://docs.google.com/forms/d/e/1FAIpQLScldwRgzON8mZb273PXH3YCgfKND-B7OCsuFID3oyD-o6PTPA/viewform",
+      poster: "gambar/PT SEKUTU.png", // disesuaikan agar sama dengan key 'poster'
+      applyLink: "https://docs.google.com/forms/d/e/1FAIpQLScldwRgzON8mZb273PXH3YCgfKND-B7OCsuFID3oyD-o6PTPA/viewform", // GANTI dengan link perusahaan
       desc: "Bertanggung jawab dalam melayani tamu/pelanggan di area operasional dengan standar hospitality yang baik serta menerapkan pengalaman atau pelatihan pelayanan yang telah dimiliki.",
-      qualifications: ["Memiliki latar belakang pendidikan atau pemahaman di bidang Hospitality", "Memiliki pengalaman magang atau pelatihan sebelumnya", "Penempatan di Solo / Colomadu / Klaten", "Submit CV/Portofolio sebelum 31 Oktober 2026"]
+      qualifications: ["Memiliki latar belakang pendidikan atau pemahaman di bidang Hospitality",
+    "Memiliki pengalaman magang atau pelatihan sebelumnya",
+    "Penempatan di Solo / Colomadu / Klaten",
+    "Submit CV/Portofolio sebelum 31 Oktober 2026"]
     },
     {
       title: "Internship KOL & Affiliate Management",
@@ -812,9 +731,12 @@ body.is-admin-mode .nav-item-user {
       type: "magang",
       posted: "3 hari lalu",
       poster: "gambar/magang ethos.png",
-      applyLink: "https://link.ethos.co.id/MagangEthos",
+      applyLink: "https://link.ethos.co.id/MagangEthos", // GANTI dengan link perusahaan
       desc: "Membantu proses pencarian & koordinasi KOL/Affiliate, monitoring performa campaign, serta mencatat dan mengelola data menggunakan spreadsheet.",
-      qualifications: ["Terbuka untuk program magang (Min. 3 bulan)", "Memahami pengelolaan KOL & Affiliate", "Mampu mengoperasikan spreadsheet dengan baik", "Metode kerja Onsite & Remote"]
+      qualifications: ["Terbuka untuk program magang (Min. 3 bulan)",
+    "Memahami pengelolaan KOL & Affiliate",
+    "Mampu mengoperasikan spreadsheet dengan baik",
+    "Metode kerja Onsite & Remote"]
     },
     {
       title: "Tentor MAPEL",
@@ -834,9 +756,11 @@ body.is-admin-mode .nav-item-user {
       type: "magang",
       posted: "3 hari lalu",
       poster: "gambar/magang kemenker.png",
-      applyLink: "https://maganghub.kemnaker.go.id",
+      applyLink: "https://maganghub.kemnaker.go.id", // GANTI dengan link perusahaan
       desc: "Membantu proses pencarian & koordinasi KOL/Affiliate, monitoring performa campaign, serta mencatat dan mengelola data menggunakan spreadsheet.",
-      qualifications: ["Pendaftaran: 27 Oktober - 1 November 2026", "Terbuka untuk peserta magang Kemnaker RI", "Siap mengikuti seluruh tahapan seleksi dan jadwal magang"]
+      qualifications: ["Pendaftaran: 27 Oktober - 1 November 2026",
+    "Terbuka untuk peserta magang Kemnaker RI",
+    "Siap mengikuti seluruh tahapan seleksi dan jadwal magang"]
     },
     {
       title: "Admin",
@@ -845,9 +769,13 @@ body.is-admin-mode .nav-item-user {
       type: "parttime",
       posted: "6 jam lalu",
       poster: "gambar/PT DAPUR.png",
-      applyLink: "mailto:hrddapoerbarru@gmail.com?subject=SOLO%20-%20Nama%20Lengkap%20-%20Admin",
+      applyLink: "mailto:hrddapoerbarru@gmail.com?subject=SOLO%20-%20Nama%20Lengkap%20-%20Admin", // GANTI dengan link perusahaan
       desc: "Mengelola administrasi harian, membalas chat pelanggan dengan cepat, menangani tugas multi-tasking, serta berkoordinasi secara cekatan di bawah tekanan.",
-      qualifications: ["Wanita, maksimal 25 tahun", "Pendidikan minimal SMA / sederajat", "Memiliki pengalaman bekerja sebagai admin / CS / sales lebih disukai", "Jujur, ramah, cekatan, dan mampu bekerja di bawah tekanan", "Multi-tasking person dan mampu membalas chat dengan cepat"]
+      qualifications: ["Wanita, maksimal 25 tahun",
+    "Pendidikan minimal SMA / sederajat",
+    "Memiliki pengalaman bekerja sebagai admin / CS / sales lebih disukai",
+    "Jujur, ramah, cekatan, dan mampu bekerja di bawah tekanan",
+    "Multi-tasking person dan mampu membalas chat dengan cepat"]
     },
     {
       title: "Internship Content Writer Otomotif & Sport",
@@ -856,9 +784,13 @@ body.is-admin-mode .nav-item-user {
       type: "magang",
       posted: "1 hari lalu",
       poster: "gambar/magang omd.png",
-      applyLink: "https://docs.google.com/forms/d/e/1FAIpQLScEfse2FN4nGPxrALC5TCDqpv1ehlRtumTIO1tOv2anBm-sEw/viewform",
+      applyLink: "https://docs.google.com/forms/d/e/1FAIpQLScEfse2FN4nGPxrALC5TCDqpv1ehlRtumTIO1tOv2anBm-sEw/viewform", // GANTI dengan link perusahaan
       desc: "Melakukan riset dan menulis artikel berita digital, mengoptimalkan konten SEO sesuai standar jurnalistik tvonenews.com, serta mendampingi reporter organik untuk liputan di lapangan.",
-      qualifications: ["Diutamakan dari jurusan Jurnalistik", "Memahami perkembangan dunia olahraga dan industri otomotif", "Memiliki kemampuan menulis artikel berita sesuai EYD", "Paham melakukan riset, verifikasi informasi, dan mengembangkan angle menarik", "Mengerti teknik dasar SEO dan mengikuti tren berita"]
+      qualifications: ["Diutamakan dari jurusan Jurnalistik",
+    "Memahami perkembangan dunia olahraga dan industri otomotif",
+    "Memiliki kemampuan menulis artikel berita sesuai EYD",
+    "Paham melakukan riset, verifikasi informasi, dan mengembangkan angle menarik",
+    "Mengerti teknik dasar SEO dan mengikuti tren berita"]
     },
     {
       title: "Admin Media Sosial",
@@ -867,7 +799,7 @@ body.is-admin-mode .nav-item-user {
       type: "fulltime",
       posted: "1 hari lalu",
       poster: "gambar/krasikan.png",
-      applyLink: "",
+      applyLink: "", // GANTI dengan link perusahaan
       desc: "Membuat materi visual untuk kebutuhan klien dan internal.",
       qualifications: ["Min. D3 DKV/Desain", "Mahir Figma & Adobe Suite", "Punya portofolio", "Bisa kerja dengan deadline ketat"]
     },
@@ -878,12 +810,16 @@ body.is-admin-mode .nav-item-user {
       type: "parttime",
       posted: "2 hari lalu",
       poster: "gambar/PT VITA.png",
-      applyLink: "https://wa.me/6282134395570",
+      applyLink: "https://wa.me/6282134395570", // GANTI dengan link perusahaan
       desc: "Menjalankan penjualan dan pemasaran produk Vita Salad di outlet pada jam kerja pagi (05.00 - 09.00 WIB) dengan pelayanan yang ramah dan komunikatif.",
-      qualifications: ["Perempuan, usia 18-25 tahun dan belum menikah", "Berpengalaman di bidang street food atau usaha kuliner", "Ramah, komunikatif, mau & mampu bekerja sama dengan tim", "Memiliki kendaraan (motor) dan siap dengan jam kerja pukul 05.00 - 09.00 pagi"]
+      qualifications: ["Perempuan, usia 18-25 tahun dan belum menikah",
+    "Berpengalaman di bidang street food atau usaha kuliner",
+    "Ramah, komunikatif, mau & mampu bekerja sama dengan tim",
+    "Memiliki kendaraan (motor) dan siap dengan jam kerja pukul 05.00 - 09.00 pagi"]
     }
   ];
 
+  /* Gambar pengganti kalau file poster tidak ditemukan */
   var POSTER_FALLBACK = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(
     '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" viewBox="0 0 400 500">' +
     '<rect width="400" height="500" fill="#EAF1FB"/>' +
@@ -931,6 +867,7 @@ body.is-admin-mode .nav-item-user {
       jobGrid.appendChild(col);
     });
 
+    // fallback kalau gambar poster gagal dimuat
     jobGrid.querySelectorAll(".job-poster").forEach(function(img){
       img.addEventListener("error", function onPosterError(){
         img.removeEventListener("error", onPosterError);
@@ -938,6 +875,7 @@ body.is-admin-mode .nav-item-user {
       });
     });
 
+    // attach listeners for this filtered set
     jobGrid.querySelectorAll("[data-view-job]").forEach(function(btn){
       btn.addEventListener("click", function(){
         openJobDetail(filtered[parseInt(btn.getAttribute("data-view-job"),10)]);
@@ -999,7 +937,7 @@ body.is-admin-mode .nav-item-user {
 
   renderJobs();
 
-  /* ================= UPLOAD LOWONGAN + TIMER PERSISTEN + LOCALSTORAGE FILE ================= */
+  /* ================= UPLOAD LOWONGAN + TIMER PERSISTEN ================= */
   (function(){
     var form = document.getElementById("uploadJobForm");
     if (!form) return;
@@ -1013,7 +951,6 @@ body.is-admin-mode .nav-item-user {
     var timer = null;
     var phoneInput = document.getElementById("uploadJobPhone");
     var draftFields = ["uploadJobName", "uploadJobPhone", "uploadJobDescription", "uploadJobLink"];
-
     function saveDraft(){
       var draft = {};
       draftFields.forEach(function(id){ draft[id] = document.getElementById(id).value; });
@@ -1066,26 +1003,21 @@ body.is-admin-mode .nav-item-user {
       step1.style.display = "";
       step2.style.display = "none";
     }
-
     next.addEventListener("click", function(){
       var fields = ["uploadJobName","uploadJobPhone","uploadJobDescription","uploadJobLink"];
       var digits = phoneInput.value.replace(/\D/g, "");
       phoneInput.setCustomValidity(digits.length >= 12 ? "" : "Nomor HP harus terdiri dari minimal 12 angka.");
       var valid = fields.every(function(id){ return document.getElementById(id).checkValidity(); });
-      var imageFileEl = document.getElementById("uploadJobImageFile");
-      var imageValid = imageFileEl.files.length > 0;
-      imageFileEl.setCustomValidity(imageValid ? "" : "Wajib melampirkan gambar lowongan.");
-
-      if (!valid || !imageValid) {
+      var imageChoice = form.querySelector('input[name="imageEmailOption"]:checked');
+      if (!valid || !imageChoice) {
         form.classList.add("was-validated");
         form.reportValidity();
+        if (!imageChoice) document.getElementById("uploadImageEmail").reportValidity();
         return;
       }
       showStep2();
     });
-
     back.addEventListener("click", showStep1);
-
     document.getElementById("uploadJobModal").addEventListener("shown.bs.modal", function(){
       var deadline = Number(localStorage.getItem(deadlineKey) || 0);
       if (deadline && deadline > Date.now()) showStep2();
@@ -1098,25 +1030,12 @@ body.is-admin-mode .nav-item-user {
         showStep1();
       }
     });
-
     document.getElementById("uploadJobModal").addEventListener("hidden.bs.modal", function(){
       if (timer) { clearInterval(timer); timer = null; }
     });
-
     form.addEventListener("submit", function(e){
       e.preventDefault();
-      var proofFileEl = document.getElementById("uploadJobProofFile");
-      var proofValid = proofFileEl.files.length > 0;
-      proofFileEl.setCustomValidity(proofValid ? "" : "Wajib melampirkan bukti pembayaran.");
-
-      if (!form.checkValidity() || !proofValid) {
-        form.classList.add("was-validated");
-        if (step1.style.display === "none" && !document.getElementById("uploadJobImageFile").checkValidity()) { showStep1(); }
-        else if (step1.style.display === "none" && !draftFields.every(function(id){ return document.getElementById(id).checkValidity(); })) { showStep1(); }
-        form.reportValidity();
-        return;
-      }
-
+      if (!form.checkValidity()) { form.classList.add("was-validated"); form.reportValidity(); return; }
       var deadline = Number(localStorage.getItem(deadlineKey) || 0);
       if (!deadline || deadline <= Date.now()) {
         alert("Waktu pembayaran 30 menit sudah habis. Silakan isi ulang formulir upload lowongan.");
@@ -1127,112 +1046,34 @@ body.is-admin-mode .nav-item-user {
         showStep1();
         return;
       }
-
       var name = document.getElementById("uploadJobName").value.trim();
       var phone = document.getElementById("uploadJobPhone").value.trim();
       var desc = document.getElementById("uploadJobDescription").value.trim();
       var link = document.getElementById("uploadJobLink").value.trim();
-      var imageFile = document.getElementById("uploadJobImageFile").files[0];
-      var proofFile = proofFileEl.files[0];
+      var imageChoice = form.querySelector('input[name="imageEmailOption"]:checked');
+      var proofChoice = form.querySelector('input[name="proofEmailOption"]:checked');
+      var body = "Pengajuan upload info lowongan HireMe\n\nNama: " + name +
+        "\nNo. HP: " + phone + "\nDeskripsi jobs: " + desc +
+        "\nLink pengumpulan CV: " + link +
+        "\nLampiran gambar: " + (imageChoice ? imageChoice.value : "Tidak dipilih") +
+        "\nBukti pembayaran: " + (proofChoice ? proofChoice.value : "Tidak dipilih");
+      var composeUrl = "https://mail.google.com/mail/?view=cm&fs=1&to=hireamejob@gmail.com&su=" +
+        encodeURIComponent("Pengajuan Upload Lowongan - " + name) + "&body=" + encodeURIComponent(body);
+      // Coba buka email. Jika popup diblokir, proses reset tetap dilakukan.
+      var emailWindow = window.open(composeUrl, "_blank", "noopener,noreferrer");
 
-      function readCompressed(file, maxSide, cb){
-        var fr = new FileReader();
-        fr.onerror = function(){ cb(null); };
-        fr.onload = function(ev){
-          var raw = ev.target.result;
-          var im = new Image();
-          im.onload = function(){
-            try {
-              var sc = Math.min(1, maxSide / Math.max(im.width, im.height));
-              var cv = document.createElement("canvas");
-              cv.width = Math.max(1, Math.round(im.width * sc));
-              cv.height = Math.max(1, Math.round(im.height * sc));
-              var cx = cv.getContext("2d");
-              cx.fillStyle = "#fff"; cx.fillRect(0, 0, cv.width, cv.height);
-              cx.drawImage(im, 0, 0, cv.width, cv.height);
-              cb(cv.toDataURL("image/jpeg", 0.7));
-            } catch(err){ cb(raw); }
-          };
-          im.onerror = function(){ cb(raw); };
-          im.src = raw;
-        };
-        fr.readAsDataURL(file);
-      }
+      // Setelah tombol "Kirim melalui Email" ditekan, timer dan form selalu direset.
+      if (timer) { clearInterval(timer); timer = null; }
+      localStorage.removeItem(deadlineKey);
+      localStorage.removeItem(draftKey);
 
-      var readerImg = new FileReader();
-      readerImg.onload = function(uploadEvt1){
-        var imageDataUrl = uploadEvt1.target.result;
+      form.reset();
+      form.classList.remove("was-validated");
+      showStep1();
+      document.getElementById("uploadJobCountdown").textContent = "30:00";
 
-        var readerProof = new FileReader();
-        readerProof.onload = function(uploadEvt2){
-          var proofDataUrl = uploadEvt2.target.result;
-
-          var sessionEmail = JSON.parse(localStorage.getItem("hireme_session") || "null");
-          var userEmail = sessionEmail ? sessionEmail : "guest@hireme.com";
-          var userName = name;
-          try {
-            var usersList = JSON.parse(localStorage.getItem("hireme_users") || "[]");
-            var foundUser = usersList.filter(function(x){ return x.email === sessionEmail; })[0];
-            if(foundUser) { userName = foundUser.name; }
-          } catch(err){}
-
-          var uploadDataRecord = {
-            id: Date.now(),
-            email: userEmail,
-            name: userName,
-            phone: phone,
-            title: desc.length > 60 ? desc.slice(0, 60) + "..." : desc,
-            description: desc,
-            link: link,
-            imageName: imageFile.name,
-            imageData: imageDataUrl,
-            proofName: proofFile.name,
-            proofData: proofDataUrl,
-            date: Date.now(),
-            status: "Menunggu",
-            reason: ""
-          };
-
-          var existingUploads = [];
-          try {
-            existingUploads = JSON.parse(localStorage.getItem("hireme_history") || "[]");
-          } catch(err){}
-          existingUploads.push(uploadDataRecord);
-          try {
-            localStorage.setItem("hireme_history", JSON.stringify(existingUploads));
-          } catch(err){
-            alert("Gagal menyimpan data: penyimpanan browser penuh. Coba gunakan gambar yang lebih kecil.");
-            return;
-          }
-
-          if (timer) { clearInterval(timer); timer = null; }
-          localStorage.removeItem(deadlineKey);
-          localStorage.removeItem(draftKey);
-
-          form.reset();
-          form.classList.remove("was-validated");
-          showStep1();
-          countdown.textContent = "30:00";
-
-          var uploadModalEl = document.getElementById("uploadJobModal");
-          var uploadModal = bootstrap.Modal.getInstance(uploadModalEl) || new bootstrap.Modal(uploadModalEl);
-          if (uploadModal) uploadModal.hide();
-
-          if (typeof renderProfile === "function") {
-            renderProfile();
-          }
-
-          alert("Info lowongan berhasil dikirim dan tersimpan di panel admin!");
-        };
-        readCompressed(proofFile, 900, function(url){
-          if (!url) { alert("Gagal membaca file bukti pembayaran. Silakan pilih ulang file."); return; }
-          readerProof.onload({target:{result:url}});
-        });
-      };
-      readCompressed(imageFile, 1000, function(url){
-        if (!url) { alert("Gagal membaca file gambar lowongan. Silakan pilih ulang file."); return; }
-        readerImg.onload({target:{result:url}});
-      });
+      var uploadModal = bootstrap.Modal.getInstance(document.getElementById("uploadJobModal"));
+      if (uploadModal) uploadModal.hide();
     });
   })();
 
@@ -1298,353 +1139,8 @@ body.is-admin-mode .nav-item-user {
     }, 4000);
   });
 
-  // Inisialisasi tampilan awal: Selalu mulai dari home page, lalu muat state halaman terakhir jika ada refresh
-  goToPage("home", false);
-  var savedPage = localStorage.getItem(LAST_PAGE_KEY);
-  if(savedPage) {
-    // Jika user admin dan halaman terakhirnya adalah profile/admin, atau halaman user biasa, restore
-    goToPage(savedPage, false);
-  }
-
 })();
 </script>
-
-<!-- ============ [TAMBAHAN] SCRIPT LOGIN / PROFIL / RIWAYAT ============ -->
-<script>
-var renderProfile;
-(function(){
-  "use strict";
-
-  /* ===== KONFIGURASI ===== */
-  var ADMIN_EMAIL = "hireamejob@gmail.com";
-  var ADMIN_PASS  = "Admin12345";
-  var K = {users:"hireme_users", session:"hireme_session", history:"hireme_history", pending:"hireme_pending"};
-
-  /* ===== HELPER ===== */
-  function load(k, d){ try{ var v = JSON.parse(localStorage.getItem(k)); return v == null ? d : v; }catch(e){ return d; } }
-  function save(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
-  function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
-  function hash(s){ var h = 5381; for(var i=0;i<s.length;i++){ h = ((h<<5)+h+s.charCodeAt(i))|0; } return String(h); }
-  function $(id){ return document.getElementById(id); }
-  function showErr(id, msg){ var el=$(id); el.textContent = msg; el.classList.remove("d-none"); }
-  function hideErr(id){ $(id).classList.add("d-none"); }
-  function fmtDate(ts){ return new Date(ts).toLocaleString("id-ID", {day:"2-digit", month:"short", year:"numeric", hour:"2-digit", minute:"2-digit"}); }
-
-  function currentUser(){
-    var email = load(K.session, null);
-    if(!email) return null;
-    if(email === ADMIN_EMAIL) return {email:ADMIN_EMAIL, name:"Admin HireMe", admin:true};
-    var u = load(K.users, []).filter(function(x){ return x.email === email; })[0];
-    return u ? {email:u.email, name:u.name, admin:false} : null;
-  }
-
-  var authModal = new bootstrap.Modal($("authModal"));
-
-  /* ===== NAVBAR: sisipkan menu Login / Profil / Logout lewat JS ===== */
-  var navList = document.querySelector("#navMain .navbar-nav");
-  var authItem = document.createElement("li");
-  authItem.className = "nav-item ms-lg-2";
-  navList.appendChild(authItem);
-
-  function renderNav(){
-    var u = currentUser();
-    if(!u){
-      document.body.classList.remove("is-admin-mode");
-      authItem.innerHTML = '<button type="button" class="btn btn-orange btn-sm" id="navLoginBtn"><i class="bi bi-box-arrow-in-right me-1"></i> Login</button>';
-    } else if(u.admin){
-      document.body.classList.add("is-admin-mode");
-      authItem.innerHTML =
-        '<div class="d-flex align-items-center gap-2">' +
-          '<span class="badge bg-warning text-dark"><i class="bi bi-shield-lock-fill me-1"></i> Mode Admin</span>' +
-          '<button type="button" class="btn btn-outline-danger btn-sm" id="navLogoutBtn"><i class="bi bi-box-arrow-right me-1"></i> Logout</button>' +
-        '</div>';
-    } else {
-      document.body.classList.remove("is-admin-mode");
-      authItem.innerHTML =
-        '<div class="dropdown">' +
-          '<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-circle me-1"></i>' + esc(u.name.split(" ")[0]) + '</a>' +
-          '<ul class="dropdown-menu dropdown-menu-end">' +
-            '<li><a class="dropdown-item" href="#" id="navProfileBtn"><i class="bi bi-person me-2"></i>Profil &amp; Riwayat</a></li>' +
-            '<li><hr class="dropdown-divider"></li>' +
-            '<li><a class="dropdown-item" href="#" id="navLogoutBtn"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>' +
-          '</ul>' +
-        '</div>';
-    }
-  }
-
-  authItem.addEventListener("click", function(e){
-    var t = e.target.closest("#navLoginBtn, #navProfileBtn, #navLogoutBtn");
-    if(!t) return;
-    e.preventDefault();
-    if(t.id === "navLoginBtn") openAuth("login");
-    if(t.id === "navProfileBtn") showProfile();
-    if(t.id === "navLogoutBtn") logout();
-  });
-
-  /* ===== MODAL AUTH ===== */
-  var views = {login:"authLoginForm", register:"authRegisterForm", verify:"authVerifyForm"};
-  var titles = {login:"Login", register:"Daftar Akun", verify:"Verifikasi Email"};
-  function openAuth(view){ switchView(view || "login"); authModal.show(); }
-  function switchView(view){
-    Object.keys(views).forEach(function(k){ $(views[k]).style.display = (k === view) ? "" : "none"; });
-    $("authTitle").textContent = titles[view];
-    ["loginError","regError","verifyError"].forEach(hideErr);
-  }
-  $("goRegister").addEventListener("click", function(){ switchView("register"); });
-  $("goLogin").addEventListener("click", function(){ switchView("login"); });
-  $("verifyBack").addEventListener("click", function(){ switchView("register"); });
-
-  /* ===== DAFTAR ===== */
-  $("authRegisterForm").addEventListener("submit", function(e){
-    e.preventDefault();
-    hideErr("regError");
-    var name = $("regName").value.trim();
-    var email = $("regEmail").value.trim().toLowerCase();
-    var pass = $("regPass").value;
-    var pass2 = $("regPass2").value;
-    if(!name) return showErr("regError", "Nama wajib diisi.");
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showErr("regError", "Masukkan email yang valid.");
-    if(email === ADMIN_EMAIL) return showErr("regError", "Email ini tidak bisa didaftarkan.");
-    if(load(K.users, []).some(function(u){ return u.email === email; })) return showErr("regError", "Email sudah terdaftar. Silakan login.");
-    if(!/^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(pass)) return showErr("regError", "Password minimal 8 karakter dan harus kombinasi huruf + angka.");
-    if(pass !== pass2) return showErr("regError", "Konfirmasi password tidak sama.");
-
-    var code = String(Math.floor(100000 + Math.random() * 900000));
-    save(K.pending, {name:name, email:email, pass:hash(pass), code:code, exp:Date.now() + 10*60*1000});
-    $("verifyEmailText").textContent = email;
-    $("verifyDemoCode").textContent = code;
-    $("verifyCode").value = "";
-    switchView("verify");
-  });
-
-  /* ===== VERIFIKASI ===== */
-  $("authVerifyForm").addEventListener("submit", function(e){
-    e.preventDefault();
-    hideErr("verifyError");
-    var p = load(K.pending, null);
-    if(!p) return showErr("verifyError", "Data pendaftaran tidak ditemukan. Silakan daftar ulang.");
-    if(Date.now() > p.exp) return showErr("verifyError", "Kode kedaluwarsa. Silakan daftar ulang.");
-    if($("verifyCode").value.trim() !== p.code) return showErr("verifyError", "Kode verifikasi salah.");
-    var users = load(K.users, []);
-    users.push({name:p.name, email:p.email, pass:p.pass, verified:true, created:Date.now()});
-    save(K.users, users);
-    localStorage.removeItem(K.pending);
-    save(K.session, p.email);
-    authModal.hide();
-    renderNav();
-    showProfile();
-  });
-
-  /* ===== LOGIN ===== */
-  $("authLoginForm").addEventListener("submit", function(e){
-    e.preventDefault();
-    hideErr("loginError");
-    var email = $("loginEmail").value.trim().toLowerCase();
-    var pass = $("loginPass").value;
-    if(!email || !pass) return showErr("loginError", "Email dan password wajib diisi.");
-    if(email === ADMIN_EMAIL){
-      if(hash(pass) !== hash(ADMIN_PASS)) return showErr("loginError", "Email atau password salah.");
-    } else {
-      var u = load(K.users, []).filter(function(x){ return x.email === email && x.pass === hash(pass); })[0];
-      if(!u) return showErr("loginError", "Email atau password salah.");
-      if(!u.verified) return showErr("loginError", "Email belum diverifikasi.");
-    }
-    save(K.session, email);
-    $("authLoginForm").reset();
-    authModal.hide();
-    renderNav();
-    showProfile();
-  });
-
-  /* ===== LOGOUT ===== */
-  function logout(){
-    localStorage.removeItem(K.session);
-    localStorage.removeItem("hireme_last_page");
-    document.body.classList.remove("is-admin-mode");
-    renderNav();
-    var home = document.querySelector('.nav-link[data-page="home"]');
-    if(home) home.click();
-  }
-  $("profileLogoutBtn").addEventListener("click", logout);
-
-  /* ===== HALAMAN PROFIL / ADMIN ===== */
-  function showProfile(){
-    var u = currentUser();
-    if(!u){ openAuth("login"); return; }
-    
-    document.querySelectorAll(".page-section").forEach(function(p){ p.classList.remove("active-page"); });
-    $("page-profile").classList.add("active-page");
-    document.querySelectorAll(".nav-link[data-page]").forEach(function(l){ l.classList.remove("active"); });
-    window.scrollTo(0, 0);
-    var collapse = $("navMain");
-    if(collapse.classList.contains("show")) bootstrap.Collapse.getOrCreateInstance(collapse).hide();
-    localStorage.setItem("hireme_last_page", "profile");
-    renderProfile();
-  }
-
-  function fileNameFor(name, dataUrl){
-    var m = /^data:image\/([a-z0-9.+-]+)/i.exec(dataUrl || "");
-    var ext = m ? m[1].toLowerCase().replace("jpeg", "jpg").replace("svg+xml", "svg") : "jpg";
-    var base = String(name || "lampiran").replace(/\.[^.]+$/, "").replace(/[\\/:*?"<>|]+/g, "_");
-    return base + "." + ext;
-  }
-
-  document.addEventListener("click", function(e){
-    var a = e.target.closest ? e.target.closest("a[data-view-file]") : null;
-    if(!a) return;
-    e.preventDefault();
-    var href = a.getAttribute("href") || "";
-    var m = /^data:([^;,]+)?(;base64)?,(.*)$/.exec(href);
-    if(!m){ window.open(href, "_blank"); return; }
-    try {
-      var bin = m[2] ? atob(m[3]) : decodeURIComponent(m[3]);
-      var arr = new Uint8Array(bin.length);
-      for(var i = 0; i < bin.length; i++){ arr[i] = bin.charCodeAt(i); }
-      var url = URL.createObjectURL(new Blob([arr], {type: m[1] || "image/jpeg"}));
-      var w = window.open(url, "_blank");
-      if(!w){ location.href = url; }
-      setTimeout(function(){ URL.revokeObjectURL(url); }, 60000);
-    } catch(err){
-      alert("Gagal membuka file. Silakan gunakan tombol Unduh.");
-    }
-  });
-
-  function statusBadge(s){
-    var cls = s === "Disetujui" ? "bg-success" : (s === "Ditolak" ? "bg-danger" : "bg-warning text-dark");
-    return '<span class="badge ' + cls + '">' + esc(s || "Menunggu") + '</span>';
-  }
-
-  function historyCard(h){
-    var html = '<div class="history-card">' +
-      '<div class="d-flex justify-content-between align-items-start gap-2 mb-1">' +
-        '<h6 class="mb-0">' + esc(h.title) + '</h6>' + statusBadge(h.status) +
-      '</div>' +
-      '<p class="small muted mb-1">' + fmtDate(h.date) + '</p>' +
-      '<p class="small mb-1"><strong>Deskripsi:</strong> ' + esc(h.description) + '</p>' +
-      '<p class="small mb-1"><i class="bi bi-link-45deg"></i> Link CV: <a href="' + esc(h.link) + '" target="_blank">' + esc(h.link) + '</a></p>' +
-      '<p class="small mb-1">No. HP: ' + esc(h.phone) + '</p>';
-    
-    if(h.imageName && h.imageData){
-      html += '<p class="small mb-1"><strong>Gambar Lowongan:</strong> ' + esc(h.imageName) + '<br><img src="' + h.imageData + '" alt="Gambar lowongan" style="max-width:100%;max-height:240px;border-radius:8px;border:1px solid #E3ECF9;margin-top:.25rem"><br><a href="' + h.imageData + '" data-view-file="1" class="btn btn-sm btn-outline-primary mt-1">Lihat Gambar Lowongan</a> <a href="' + h.imageData + '" download="' + esc(fileNameFor(h.imageName, h.imageData)) + '" class="btn btn-sm btn-outline-success mt-1"><i class="bi bi-download"></i> Unduh Gambar Lowongan</a></p>';
-    }
-    if(h.proofName && h.proofData){
-      html += '<p class="small mb-1"><strong>Bukti Pembayaran:</strong> ' + esc(h.proofName) + '<br><img src="' + h.proofData + '" alt="Bukti pembayaran" style="max-width:100%;max-height:240px;border-radius:8px;border:1px solid #E3ECF9;margin-top:.25rem"><br><a href="' + h.proofData + '" data-view-file="1" class="btn btn-sm btn-outline-primary mt-1">Lihat Bukti Pembayaran</a> <a href="' + h.proofData + '" download="' + esc(fileNameFor(h.proofName, h.proofData)) + '" class="btn btn-sm btn-outline-success mt-1"><i class="bi bi-download"></i> Unduh Bukti Pembayaran</a></p>';
-    }
-
-    if(h.status === "Ditolak" && h.reason){
-      html += '<div class="alert alert-danger py-2 small mt-2 mb-0"><strong>Alasan penolakan:</strong> ' + esc(h.reason) + '</div>';
-    }
-
-    return html + '</div>';
-  }
-
-  renderProfile = function(){
-    var u = currentUser();
-    if(!u) return;
-    $("profileName").textContent = u.name;
-    $("profileEmail").textContent = u.email + (u.admin ? " (Admin)" : "");
-    $("profileEyebrow").textContent = u.admin ? "Panel Admin" : "Profil";
-
-    // Sort kronologis terlama ke terbaru untuk urutan record tak terbatas
-    var all = load(K.history, []).sort(function(a,b){ return a.date - b.date; });
-
-    $("adminPanel").style.display = u.admin ? "" : "none";
-    $("historyWrap").style.display = u.admin ? "none" : "";
-
-    if(u.admin){
-      var tbody = $("adminTableBody");
-      tbody.innerHTML = "";
-      if(all.length === 0){
-        tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted py-4">Belum ada record data upload lowongan.</td></tr>';
-      } else {
-        all.forEach(function(h, idx){
-          var tr = document.createElement("tr");
-          
-          var filesHtml = '';
-          if(h.imageName && h.imageData){
-            filesHtml += '<div class="mb-2"><span class="badge bg-secondary mb-1">Gambar Lowongan</span><br>' +
-              '<a href="' + h.imageData + '" data-view-file="1" class="btn btn-xs btn-outline-primary btn-sm me-1 py-0 px-1 fs-7">Lihat</a>' +
-              '<a href="' + h.imageData + '" download="' + esc(fileNameFor(h.imageName, h.imageData)) + '" class="btn btn-xs btn-outline-success btn-sm py-0 px-1 fs-7">Unduh</a></div>';
-          }
-          if(h.proofName && h.proofData){
-            filesHtml += '<div><span class="badge bg-secondary mb-1">Bukti Bayar</span><br>' +
-              '<a href="' + h.proofData + '" data-view-file="1" class="btn btn-xs btn-outline-primary btn-sm me-1 py-0 px-1 fs-7">Lihat</a>' +
-              '<a href="' + h.proofData + '" download="' + esc(fileNameFor(h.proofName, h.proofData)) + '" class="btn btn-xs btn-outline-success btn-sm py-0 px-1 fs-7">Unduh</a></div>';
-          }
-
-          var statusCol = statusBadge(h.status);
-          if(h.status === "Ditolak" && h.reason){
-            statusCol += '<br><small class="text-danger">Ket: ' + esc(h.reason) + '</small>';
-          }
-
-          var actionsHtml = 
-            '<div class="d-flex flex-column gap-1">' +
-              '<button class="btn btn-sm btn-success py-1 px-2" data-approve="' + h.id + '"><i class="bi bi-check-circle"></i> Setujui</button>' +
-              '<button class="btn btn-sm btn-warning text-dark py-1 px-2" data-reject="' + h.id + '"><i class="bi bi-x-circle"></i> Tidak Setuju</button>' +
-              '<button class="btn btn-sm btn-outline-danger py-1 px-2 mt-1" data-delete-id="' + h.id + '"><i class="bi bi-trash"></i> Hapus</button>' +
-            '</div>';
-
-          tr.innerHTML = 
-            '<td class="text-center fw-bold">' + (idx + 1) + '</td>' +
-            '<td class="small">' + fmtDate(h.date) + '</td>' +
-            '<td class="small"><strong>' + esc(h.name) + '</strong><br><span class="text-muted">' + esc(h.email) + '</span><br><span class="text-muted">HP: ' + esc(h.phone) + '</span></td>' +
-            '<td class="small"><strong>Deskripsi:</strong> ' + esc(h.description) + '<br><i class="bi bi-link-45deg"></i> <a href="' + esc(h.link) + '" target="_blank">Link Form CV</a></td>' +
-            '<td>' + filesHtml + '</td>' +
-            '<td class="text-center">' + statusCol + '</td>' +
-            '<td class="text-center">' + actionsHtml + '</td>';
-            
-          tbody.appendChild(tr);
-        });
-      }
-    } else {
-      var mine = all.filter(function(h){ return h.email === u.email; }).reverse();
-      $("historyList").innerHTML = mine.length ? mine.map(function(h){ return historyCard(h); }).join("") :
-        '<div class="text-center muted py-4"><i class="bi bi-clock-history fs-1 d-block mb-2"></i>Belum ada riwayat upload lowongan.</div>';
-    }
-  };
-
-  $("adminTableBody").addEventListener("click", function(e){
-    var u = currentUser();
-    if(!u || !u.admin) return;
-
-    var appBtn = e.target.closest("[data-approve]");
-    var rejBtn = e.target.closest("[data-reject]");
-    var delBtn = e.target.closest("[data-delete-id]");
-
-    if(!appBtn && !rejBtn && !delBtn) return;
-
-    var list = load(K.history, []);
-    var id = Number((appBtn || rejBtn || delBtn).getAttribute(appBtn ? "data-approve" : (rejBtn ? "data-reject" : "data-delete-id")));
-    var item = list.filter(function(h){ return h.id === id; })[0];
-
-    if(appBtn && item){
-      item.status = "Disetujui";
-      item.reason = "";
-      save(K.history, list);
-      renderProfile();
-      alert("Status lowongan disetujui!");
-    } else if(rejBtn && item){
-      var reason = prompt("Tulis alasan / keterangan penolakan lowongan ini:");
-      if(reason === null) return;
-      if(!reason.trim()){ alert("Keterangan penolakan wajib diisi."); return; }
-      item.status = "Ditolak";
-      item.reason = reason.trim();
-      save(K.history, list);
-      renderProfile();
-      alert("Status lowongan ditolak dengan keterangan tersimpan.");
-    } else if(delBtn){
-      if(confirm("Apakah Anda yakin ingin menghapus data upload ini? Data akan terhapus juga dari riwayat user.")){
-        list = list.filter(function(h){ return h.id !== id; });
-        save(K.history, list);
-        renderProfile();
-      }
-    }
-  });
-
-  renderNav();
-})();
-</script>
-<!-- ============ [AKHIR TAMBAHAN] ============ -->
 
 </body>
 </html>
