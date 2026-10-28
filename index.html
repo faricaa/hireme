@@ -122,14 +122,13 @@ a{ text-decoration:none; }
 
 /* ---------- Testimonials ---------- */
 .testi-track-wrap{ overflow:hidden; padding:1rem 0 2rem; }
-.testi-track{ display:flex; gap:1.25rem; transition:transform .5s ease; }
+.testi-track{ display:flex; align-items:center; gap:1.25rem; transition:transform .5s ease; }
 .testi-card{
-  flex:0 0 300px; background:#F4F9FF; border-radius:16px 16px 16px 4px; padding:1.4rem;
+  flex:0 0 300px; background:#F4F9FF; border-radius:16px; padding:.6rem;
   box-shadow:var(--shadow-sm); opacity:.55; transform:scale(.92); transition:all .4s ease;
 }
 .testi-card.is-active{ opacity:1; transform:scale(1); background:#fff; border:2px solid var(--sky-blue); }
-.testi-card .stars{ color:#FF6B00; font-size:.85rem; margin-bottom:.5rem; }
-.testi-avatar{ width:42px; height:42px; border-radius:50%; object-fit:cover; }
+.testi-shot{ display:block; width:100%; height:auto; border-radius:10px; }
 .testi-controls{ display:flex; justify-content:center; gap:.75rem; margin-top:.5rem; }
 .testi-controls button{
   width:38px; height:38px; border-radius:50%; border:1px solid #DCE7F7; background:#fff;
@@ -648,14 +647,24 @@ footer h6{ color:#fff; font-weight:700; }
     goToPage("jobs");
   });
 
-  /* ================= TESTIMONIALS ================= */
+  /* ================= TESTIMONIALS (SCREENSHOT WA) ================= */
+  /* Simpan 6 screenshot testimoni WA di folder gambar/ lalu sesuaikan nama file di bawah.
+     Kalau file tidak ditemukan, otomatis tampil gambar placeholder. */
   var testimonials = [
-    {name:"Vanisa Purida", role:"Mahasiswa", text:"Info lowongannya jelas dan yang paling membantu bisa langsung akses link pendaftaran perusahaan,Jadi lebih praktis dan nggak perlu cari linknya lagi👍🏻🙌"},
-    {name:"Karina Dya", role:"Mahasiswa", text:"Menurut saya HireMe cukup trusted untuk membantu persiapan mencari kerja,Informasinya jelas dan mudah diakses🙌"},
-    {name:"Manda Freeza", role:"Mahasiswa", text:"Infonya membantu banget dan lengkap. Selain itu, bisa langsung akses link perusahaan yang dituju, jadi lebih mudah dan praktis buat cari lowongan."},
-    {name:"Zahra Salwa.", role:"Mahasiswa ", text:"HireMe memudahkan saya untuk mengirimkan informasi lowongan pekerjaan melalui email. Prosesnya praktis, mudah, dan membantu menjangkau pencari kerja dengan lebih efektif"},
-    {name:"Aditya Kurniawan", role:"Fresh Graduate ", text:"Harganya terjangkau, prosesnya mudah dan cepat. HireMe punya fitur lengkap dalam satu platform untuk mempersiapkan pencari kerja sekaligus memudahkan kami menemukan kandidat berkualitas. Lowongannya juga ditinjau terlebih dahulu sehingga lebih aman dari risiko scam."}
+    {name:"Klien 1", img:"gambar/tes 1.png"},
+    {name:"Klien 2", img:"gambar/tes2.png"},
+    {name:"Klien 3", img:"gambar/tes3.png"},
+    {name:"Klien 4", img:"gambar/tes4.png"},
+    {name:"Klien 5", img:"gambar/tes5.png"},
+    {name:"Klien 6", img:"gambar/tes6.png"}
   ];
+
+  var TESTI_FALLBACK = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="300" height="420" viewBox="0 0 300 420">' +
+    '<rect width="300" height="420" fill="#EAF1FB"/>' +
+    '<text x="150" y="215" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#0B4DA2" text-anchor="middle">Screenshot Testimoni</text>' +
+    '</svg>'
+  );
 
   var track = document.getElementById("testiTrack");
   var activeTesti = 1;
@@ -666,12 +675,12 @@ footer h6{ color:#fff; font-weight:700; }
       var card = document.createElement("div");
       card.className = "testi-card" + (i === activeTesti ? " is-active" : "");
       card.innerHTML =
-        '<div class="d-flex align-items-center gap-2 mb-2">' +
-          '<div class="testi-avatar d-flex align-items-center justify-content-center" style="background:var(--sky-blue); color:#fff; font-weight:700;">' + t.name.charAt(0) + '</div>' +
-          '<div><div class="fw-bold small">' + t.name + '</div><div class="small muted">' + t.role + '</div></div>' +
-        '</div>' +
-        '<div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>' +
-        '<p class="small mb-0">' + t.text + '</p>';
+        '<img class="testi-shot" src="' + t.img + '" alt="Screenshot testimoni WhatsApp dari ' + t.name + '" loading="lazy">';
+      var shot = card.querySelector(".testi-shot");
+      shot.addEventListener("error", function onTestiError(){
+        shot.removeEventListener("error", onTestiError);
+        shot.src = TESTI_FALLBACK;
+      });
       track.appendChild(card);
     });
     centerTestimonial();
